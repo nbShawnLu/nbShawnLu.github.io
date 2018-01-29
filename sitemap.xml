@@ -3,51 +3,51 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://nbshawnlu.github.io/links/</loc>
+    <loc>http://page.shawnlu.ml/links/</loc>
     <lastmod>2018-01-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://nbshawnlu.github.io/about/</loc>
+    <loc>http://page.shawnlu.ml/about/</loc>
     <lastmod>2018-01-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://nbshawnlu.github.io/post/hello/</loc>
+    <loc>http://page.shawnlu.ml/post/hello/</loc>
     <lastmod>2018-01-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://nbshawnlu.github.io/categories/</loc>
+    <loc>http://page.shawnlu.ml/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://nbshawnlu.github.io/tags/hello/</loc>
-    <lastmod>2018-01-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://nbshawnlu.github.io/tags/page/</loc>
+    <loc>http://page.shawnlu.ml/tags/hello/</loc>
     <lastmod>2018-01-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://nbshawnlu.github.io/post/</loc>
+    <loc>http://page.shawnlu.ml/tags/page/</loc>
     <lastmod>2018-01-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://nbshawnlu.github.io/</loc>
+    <loc>http://page.shawnlu.ml/post/</loc>
     <lastmod>2018-01-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://nbshawnlu.github.io/tags/</loc>
+    <loc>http://page.shawnlu.ml/</loc>
+    <lastmod>2018-01-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://page.shawnlu.ml/tags/</loc>
     <lastmod>2018-01-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
