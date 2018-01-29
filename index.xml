@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Shawn Lu&#39;s Page</title>
+    <link>https://nbshawnlu.github.io/</link>
+    <description>Recent content on Shawn Lu&#39;s Page</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you likes to quote or reproduce.</copyright>
+    <lastBuildDate>Mon, 29 Jan 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://nbshawnlu.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Links</title>
+      <link>https://nbshawnlu.github.io/links/</link>
+      <pubDate>Mon, 29 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://nbshawnlu.github.io/links/</guid>
+      <description>Shawn and his friends.</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://nbshawnlu.github.io/about/</link>
+      <pubDate>Mon, 29 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://nbshawnlu.github.io/about/</guid>
+      <description>Hugo is a static site engine written in Go.
+It makes use of a variety of open source projects including:
+ Cobra Viper J Walter Weatherman Cast  Learn more and contribute on GitHub.</description>
+    </item>
+    
+    <item>
+      <title>Hello</title>
+      <link>https://nbshawnlu.github.io/post/hello/</link>
+      <pubDate>Mon, 29 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://nbshawnlu.github.io/post/hello/</guid>
+      <description> Hello. It&amp;rsquo;s Shawn Lu. This is my first post. Welcome to my personal page. </description>
+    </item>
+    
+  </channel>
+</rss>

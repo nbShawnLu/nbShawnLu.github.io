@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Page on Shawn Lu&#39;s Page</title>
+    <link>https://nbshawnlu.github.io/tags/page/</link>
+    <description>Recent content in Page on Shawn Lu&#39;s Page</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you likes to quote or reproduce.</copyright>
+    <lastBuildDate>Mon, 29 Jan 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://nbshawnlu.github.io/tags/page/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hello</title>
+      <link>https://nbshawnlu.github.io/post/hello/</link>
+      <pubDate>Mon, 29 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://nbshawnlu.github.io/post/hello/</guid>
+      <description> Hello. It&amp;rsquo;s Shawn Lu. This is my first post. Welcome to my personal page. </description>
+    </item>
+    
+  </channel>
+</rss>
