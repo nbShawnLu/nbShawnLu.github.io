@@ -1,36 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Shawn Lu&#39;s Page</title>
-    <link>http://page.shawnlu.ml/</link>
-    <description>Recent content on Shawn Lu&#39;s Page</description>
+    <title>Cuda on Shawn Lu&#39;s Page</title>
+    <link>http://page.shawnlu.ml/tags/cuda/</link>
+    <description>Recent content in Cuda on Shawn Lu&#39;s Page</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you likes to quote or reproduce.</copyright>
-    <lastBuildDate>Mon, 29 Jan 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 22 Apr 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://page.shawnlu.ml/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://page.shawnlu.ml/tags/cuda/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Links</title>
-      <link>http://page.shawnlu.ml/links/</link>
-      <pubDate>Mon, 29 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>http://page.shawnlu.ml/links/</guid>
-      <description>Shawn and his friends.</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>http://page.shawnlu.ml/about/</link>
-      <pubDate>Mon, 29 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>http://page.shawnlu.ml/about/</guid>
-      <description>Hugo is a static site engine written in Go.
-It makes use of a variety of open source projects including:
- Cobra Viper J Walter Weatherman Cast  Learn more and contribute on GitHub.</description>
-    </item>
     
     <item>
       <title>A CUDA Version of smallpt</title>
@@ -43,15 +23,6 @@ It makes use of a variety of open source projects including:
  运行结果
 Cuda部分的入门教程较多，可以参考CUDA C/C++ Basics以及An Even Easier Introduction to CUDA
  Benchmark     GTX1080Ti Intel Xeon E5 (6C12T) 2.80GHz     Resolution 1024*768 1024*768   SPP 5000 5000   Cost Time 4.3s 32.1min        GTX750 Intel Xeon E5 (8C16T) 2.40GHz     Resolution 768*768 768*768   SPP 2048 2048   Cost Time 19.</description>
-    </item>
-    
-    <item>
-      <title>Hello</title>
-      <link>http://page.shawnlu.ml/post/hello/</link>
-      <pubDate>Mon, 29 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>http://page.shawnlu.ml/post/hello/</guid>
-      <description> Hello. It&amp;rsquo;s Shawn Lu. This is my first post. Welcome to my personal page. </description>
     </item>
     
   </channel>

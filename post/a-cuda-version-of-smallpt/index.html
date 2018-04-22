@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8" />
+
+  
+  <title>A CUDA Version of smallpt</title>
+
+  
+  
+
+
+
+
+
+  
+  <meta name="author" content="Shawn Lu" />
+  <meta name="description" content="作为一个机器学习方向的研究生，把第一篇技术博客献给图形学也是一个很奇妙的事情。
+这原本是一个GPU并行编程的课程设计，选择了对smallpt光线追踪进行CUDA移植，与好友Bingo合作完成并进行了一定的优化。代码已开源至smallptCuda
+ 运行结果
+Cuda部分的入门教程较多，可以参考CUDA C/C&#43;&#43; Basics以及An Even Easier Introduction to CUDA
+ Benchmark     GTX1080Ti Intel Xeon E5 (6C12T) 2.80GHz     Resolution 1024*768 1024*768   SPP 5000 5000   Cost Time 4.3s 32.1min        GTX750 Intel Xeon E5 (8C16T) 2.40GHz     Resolution 768*768 768*768   SPP 2048 2048   Cost Time 19." />
+
+  
+  
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@gohugoio" />
+    <meta name="twitter:title" content="A CUDA Version of smallpt" />
+    <meta name="twitter:description" content="作为一个机器学习方向的研究生，把第一篇技术博客献给图形学也是一个很奇妙的事情。
+这原本是一个GPU并行编程的课程设计，选择了对smallpt光线追踪进行CUDA移植，与好友Bingo合作完成并进行了一定的优化。代码已开源至smallptCuda
+ 运行结果
+Cuda部分的入门教程较多，可以参考CUDA C/C&#43;&#43; Basics以及An Even Easier Introduction to CUDA
+ Benchmark     GTX1080Ti Intel Xeon E5 (6C12T) 2.80GHz     Resolution 1024*768 1024*768   SPP 5000 5000   Cost Time 4.3s 32.1min        GTX750 Intel Xeon E5 (8C16T) 2.40GHz     Resolution 768*768 768*768   SPP 2048 2048   Cost Time 19." />
+    <meta name="twitter:image" content="http://page.shawnlu.ml/img/avatar.jpg" />
+  
+
+  
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="A CUDA Version of smallpt" />
+  <meta property="og:description" content="作为一个机器学习方向的研究生，把第一篇技术博客献给图形学也是一个很奇妙的事情。
+这原本是一个GPU并行编程的课程设计，选择了对smallpt光线追踪进行CUDA移植，与好友Bingo合作完成并进行了一定的优化。代码已开源至smallptCuda
+ 运行结果
+Cuda部分的入门教程较多，可以参考CUDA C/C&#43;&#43; Basics以及An Even Easier Introduction to CUDA
+ Benchmark     GTX1080Ti Intel Xeon E5 (6C12T) 2.80GHz     Resolution 1024*768 1024*768   SPP 5000 5000   Cost Time 4.3s 32.1min        GTX750 Intel Xeon E5 (8C16T) 2.40GHz     Resolution 768*768 768*768   SPP 2048 2048   Cost Time 19." />
+  <meta property="og:url" content="http://page.shawnlu.ml/post/a-cuda-version-of-smallpt/" />
+  <meta property="og:image" content="http://page.shawnlu.ml/img/avatar.jpg" />
+
+
+
+
+<meta name="generator" content="Hugo 0.39" />
+
+
+<link rel="canonical" href="http://page.shawnlu.ml/post/a-cuda-version-of-smallpt/" />
+<link rel="alternative" href="http://page.shawnlu.ml/index.xml" title="Shawn Lu&#39;s Page" type="application/atom+xml" />
+
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+
+
+<meta name="robots" content="index,follow" />
+<meta name="referrer" content="origin-when-cross-origin" />
+
+
+
+
+
+
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Shawn Lu&#39;s Page" />
+<meta name="msapplication-tooltip" content="Shawn Lu&#39;s Page" />
+<meta name='msapplication-navbutton-color' content="#5fbf5e" />
+<meta name="msapplication-TileColor" content="#5fbf5e" />
+<meta name="msapplication-TileImage" content="/img/tile-image-windows.png" />
+<link rel="icon" href="http://page.shawnlu.ml/img/favicon.ico" />
+<link rel="icon" type="image/png" sizes="16x16" href="http://page.shawnlu.ml/img/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="http://page.shawnlu.ml/img/favicon-32x32.png" />
+<link rel="icon" sizes="192x192" href="http://page.shawnlu.ml/img/touch-icon-android.png" />
+<link rel="apple-touch-icon" href="http://page.shawnlu.ml/img/touch-icon-apple.png" />
+<link rel="mask-icon" href="http://page.shawnlu.ml/img/safari-pinned-tab.svg" color="#5fbf5e" />
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/video.js/6.2.8/alt/video-js-cdn.min.css" />
+
+<link rel="stylesheet" href="http://page.shawnlu.ml/css/bundle.css" />
+
+
+  
+  <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdn.bootcss.com/video.js/6.2.8/ie8/videojs-ie8.min.js"></script>
+  <![endif]-->
+
+<!--[if lte IE 11]>
+    <script src="//cdn.bootcss.com/classlist/1.1.20170427/classList.min.js"></script>
+  <![endif]-->
+
+
+<script src="//cdn.bootcss.com/object-fit-images/3.2.3/ofi.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/smooth-scroll/12.1.4/js/smooth-scroll.polyfills.min.js"></script>
+
+
+</head>
+  <body>
+    
+    <div class="suspension">
+      <a title="Go to top" class="to-top is-hide"><span class="icon icon-up"></span></a>
+      
+        
+      
+    </div>
+    
+    
+  <header class="site-header">
+  <img class="avatar" src="http://page.shawnlu.ml/img/avatar.jpg" alt="Avatar">
+  
+  <h2 class="title">Shawn Lu&#39;s Page</h2>
+  
+  <p class="subtitle">Machine Learning@SMILE Lab, UESTC</p>
+  <button class="menu-toggle" type="button">
+    <span class="icon icon-menu"></span>
+  </button>
+  <nav class="site-menu collapsed">
+    <h2 class="offscreen">Main Menu</h2>
+    <ul class="menu-list">
+      
+      
+      
+      
+        <li class="menu-item
+            
+            
+            
+              is-active
+            ">
+            <a href="http://page.shawnlu.ml/">Home</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="https://github.com/nbShawnLu">Works</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="http://page.shawnlu.ml/tags/">Tags</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="http://page.shawnlu.ml/links/">Links</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="http://page.shawnlu.ml/about/">About</a>
+          </li>
+      
+    </ul>
+  </nav>
+  <nav class="social-menu collapsed">
+    <h2 class="offscreen">Social Networks</h2>
+    <ul class="social-list">
+
+      
+      <li class="social-item">
+        <a href="mailto:nbstephenlu@gmail.com" title="Email"><span class="icon icon-email"></span></a>
+      </li>
+
+      
+      <li class="social-item">
+        <a href="//github.com/nbShawnLu" title="GitHub"><span class="icon icon-github"></span></a>
+      </li>
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <li class="social-item">
+        <a href="//www.linkedin.com/in/nbshawnlu" title="Linkedin"><span class="icon icon-linkedin"></span></a>
+      </li>
+
+      <li class="social-item">
+        <a href="//www.zhihu.com/people/ShawnLu" title="Zhihu"><span class="icon icon-zhihu"></span></a>
+      </li>
+
+      
+
+      
+
+      <li class="social-item">
+        <a href="http://page.shawnlu.ml/index.xml"><span class="icon icon-rss" title="RSS"></span></a>
+      </li>
+
+    </ul>
+  </nav>
+</header>
+
+  <section class="main post-detail">
+    <header class="post-header">
+      <h1 class="post-title">A CUDA Version of smallpt</h1>
+      <p class="post-meta">@Shawn Lu · Apr 22, 2018 · 1 min read</p>
+    </header>
+    <article class="post-content">
+
+<p>作为一个机器学习方向的研究生，把第一篇技术博客献给图形学也是一个很奇妙的事情。<br />
+这原本是一个GPU并行编程的课程设计，选择了对<a href="http://www.kevinbeason.com/smallpt/">smallpt</a>光线追踪进行CUDA移植，与好友<a href="http://bentleyblanks.github.io/">Bingo</a>合作完成并进行了一定的优化。代码已开源至<a href="https://github.com/BentleyBlanks/smallptCuda">smallptCuda</a></p>
+
+<p><img src="http://page.shawnlu.ml/media/posts/smallpt_cuda.png" alt="" /></p>
+
+<blockquote>
+<p>运行结果<br />
+Cuda部分的入门教程较多，可以参考<a href="http://www.nvidia.com/docs/IO/116711/sc11-cuda-c-basics.pdf">CUDA C/C++ Basics</a>以及<a href="https://devblogs.nvidia.com/even-easier-introduction-cuda/">An Even Easier Introduction to CUDA</a></p>
+</blockquote>
+
+<h2 id="benchmark">Benchmark</h2>
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">GTX1080Ti</th>
+<th align="center">Intel Xeon E5 (6C12T) 2.80GHz</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">Resolution</td>
+<td align="center">1024*768</td>
+<td align="center">1024*768</td>
+</tr>
+
+<tr>
+<td align="center">SPP</td>
+<td align="center">5000</td>
+<td align="center">5000</td>
+</tr>
+
+<tr>
+<td align="center">Cost Time</td>
+<td align="center">4.3s</td>
+<td align="center">32.1min</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">GTX750</th>
+<th align="center">Intel Xeon E5 (8C16T) 2.40GHz</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">Resolution</td>
+<td align="center">768*768</td>
+<td align="center">768*768</td>
+</tr>
+
+<tr>
+<td align="center">SPP</td>
+<td align="center">2048</td>
+<td align="center">2048</td>
+</tr>
+
+<tr>
+<td align="center">Cost Time</td>
+<td align="center">19.0s</td>
+<td align="center">7.2min</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="usage">Usage</h2>
+
+<h3 id="linux">Linux</h3>
+
+<pre><code>$ git clone https://github.com/BentleyBlanks/smallptCuda.git 
+$ cd smallptCuda 
+$ git checkout release3 
+$ cd src &amp;&amp; make 
+$ ./smallpt 5000 
+$ display test.png 
+</code></pre>
+
+<h2 id="开发与优化杂记">开发与优化杂记</h2>
+
+<h3 id="gpu硬件结构">GPU硬件结构</h3>
+
+<h4 id="sp-streaming-processor">SP(streaming processor)</h4>
+
+<p>也被称为CUDA core，对应着一个线程的处理。<br />
+每个SP包含各自的ALU和Register。</p>
+
+<h4 id="sm-streaming-multiprocessor">SM(streaming multiprocessor)</h4>
+
+<p>一个SM包含多个SP，每个SM包含的SP数量依据GPU架构而不同，Fermi架构GF100是32个，GF10X是48个，Kepler架构都是192个，Maxwell都是128个。<br />
+一个SM还包含控制单元和Shared Memory，可供该SM中的SP访问。</p>
+
+<h4 id="gpu">GPU</h4>
+
+<p>一个GPU包含多个SM，GPU中包含Global Memory，可供所有SM和SP访问，但延迟相比Shared Memory更高。</p>
+
+<h3 id="cuda程序软件结构">CUDA程序软件结构</h3>
+
+<h4 id="thread">thread</h4>
+
+<p>一个CUDA程序包含多个threads。</p>
+
+<h4 id="block">block</h4>
+
+<p>数个threads会被群组成一个block，一个block中的线程会被分配到同一个SM中处理，同一个block中的threads可以同步，也可以通过shared memory通信。</p>
+
+<h4 id="grid">grid</h4>
+
+<p>多个blocks则会再构成grid。</p>
+
+<h4 id="warp">warp</h4>
+
+<p>GPU执行程序时的调度单位，目前cuda的warp的大小为32，同在一个warp的线程，以不同数据资源执行相同的指令。不足32的会以32个线程打包运行。</p>
+</article>
+    <footer class="post-footer">
+      
+      <ul class="post-tags">
+        
+          <li><a href="http://page.shawnlu.ml/tags/cuda"><span class="tag">CUDA</span></a></li>
+        
+          <li><a href="http://page.shawnlu.ml/tags/smallpt"><span class="tag">Smallpt</span></a></li>
+        
+          <li><a href="http://page.shawnlu.ml/tags/computer-graphics"><span class="tag">Computer Graphics</span></a></li>
+        
+      </ul>
+      
+      <p class="post-copyright">
+        © This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you likes to quote or reproduce.
+      </p>
+    </footer>
+    
+      
+    
+  </section>
+  <footer class="site-footer">
+  <p>© 2017-2018 Shawn Lu&#39;s Page</p>
+  <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with theme <a href="https://github.com/laozhu/hugo-nuo" target="_blank">Nuo</a>.</p>
+  
+</footer>
+
+
+
+<script async src="//cdn.bootcss.com/video.js/6.2.8/alt/video.novtt.min.js"></script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      displayMath: [['$$','$$'], ['\[','\]']],
+      processEscapes: true,
+      processEnvironments: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      TeX: { equationNumbers: { autoNumber: "AMS" },
+      extensions: ["AMSmath.js", "AMSsymbols.js"] }
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+  // Fix <code> tags after MathJax finishes running. This is a
+  // hack to overcome a shortcoming of Markdown. Discussion at
+  // https://github.com/mojombo/jekyll/issues/199
+  MathJax.Hub.Queue(() => {
+    MathJax.Hub.getAllJax().map(v => v.SourceElement().parentNode.className += ' has-jax');
+  });
+</script>
+
+<script src="http://page.shawnlu.ml/js/bundle.js"></script>
+
+
+
+
+  </body>
+</html>
