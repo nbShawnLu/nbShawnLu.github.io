@@ -3,79 +3,79 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://page.shawnlu.ml/resume/</loc>
+    <loc>https://page.shawnlu.ml/resume/</loc>
     <lastmod>2018-05-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://page.shawnlu.ml/links/</loc>
+    <loc>https://page.shawnlu.ml/links/</loc>
     <lastmod>2018-01-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://page.shawnlu.ml/about/</loc>
+    <loc>https://page.shawnlu.ml/about/</loc>
     <lastmod>2018-01-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://page.shawnlu.ml/post/a-cuda-version-of-smallpt/</loc>
+    <loc>https://page.shawnlu.ml/post/a-cuda-version-of-smallpt/</loc>
     <lastmod>2018-04-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://page.shawnlu.ml/post/hello/</loc>
+    <loc>https://page.shawnlu.ml/post/hello/</loc>
     <lastmod>2018-01-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://page.shawnlu.ml/categories/</loc>
+    <loc>https://page.shawnlu.ml/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://page.shawnlu.ml/tags/computer-graphics/</loc>
-    <lastmod>2018-04-22T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://page.shawnlu.ml/tags/cuda/</loc>
+    <loc>https://page.shawnlu.ml/tags/computer-graphics/</loc>
     <lastmod>2018-04-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://page.shawnlu.ml/tags/hello/</loc>
-    <lastmod>2018-01-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://page.shawnlu.ml/tags/page/</loc>
-    <lastmod>2018-01-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://page.shawnlu.ml/post/</loc>
+    <loc>https://page.shawnlu.ml/tags/cuda/</loc>
     <lastmod>2018-04-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://page.shawnlu.ml/</loc>
+    <loc>https://page.shawnlu.ml/tags/hello/</loc>
+    <lastmod>2018-01-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://page.shawnlu.ml/tags/page/</loc>
+    <lastmod>2018-01-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://page.shawnlu.ml/post/</loc>
+    <lastmod>2018-04-22T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://page.shawnlu.ml/</loc>
     <lastmod>2018-05-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://page.shawnlu.ml/tags/smallpt/</loc>
+    <loc>https://page.shawnlu.ml/tags/smallpt/</loc>
     <lastmod>2018-04-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://page.shawnlu.ml/tags/</loc>
+    <loc>https://page.shawnlu.ml/tags/</loc>
     <lastmod>2018-04-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

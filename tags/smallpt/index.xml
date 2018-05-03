@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Smallpt on Shawn Lu&#39;s Page</title>
-    <link>http://page.shawnlu.ml/tags/smallpt/</link>
+    <link>https://page.shawnlu.ml/tags/smallpt/</link>
     <description>Recent content in Smallpt on Shawn Lu&#39;s Page</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you likes to quote or reproduce.</copyright>
     <lastBuildDate>Sun, 22 Apr 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://page.shawnlu.ml/tags/smallpt/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://page.shawnlu.ml/tags/smallpt/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>A CUDA Version of smallpt</title>
-      <link>http://page.shawnlu.ml/post/a-cuda-version-of-smallpt/</link>
+      <link>https://page.shawnlu.ml/post/a-cuda-version-of-smallpt/</link>
       <pubDate>Sun, 22 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://page.shawnlu.ml/post/a-cuda-version-of-smallpt/</guid>
+      <guid>https://page.shawnlu.ml/post/a-cuda-version-of-smallpt/</guid>
       <description>作为一个机器学习方向的研究生，把第一篇技术博客献给图形学也是一个很奇妙的事情。
 这原本是一个GPU并行编程的课程设计，选择了对smallpt光线追踪进行CUDA移植，与好友Bingo合作完成并进行了一定的优化。代码已开源至smallptCuda
  运行结果

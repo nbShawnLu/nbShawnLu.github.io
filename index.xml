@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Shawn Lu&#39;s Page</title>
-    <link>http://page.shawnlu.ml/</link>
+    <link>https://page.shawnlu.ml/</link>
     <description>Recent content on Shawn Lu&#39;s Page</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you likes to quote or reproduce.</copyright>
     <lastBuildDate>Thu, 03 May 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://page.shawnlu.ml/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://page.shawnlu.ml/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Resume</title>
-      <link>http://page.shawnlu.ml/resume/</link>
+      <link>https://page.shawnlu.ml/resume/</link>
       <pubDate>Thu, 03 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://page.shawnlu.ml/resume/</guid>
+      <guid>https://page.shawnlu.ml/resume/</guid>
       <description>Personal Information  Name: 陆啸
  Gender: Male
  Email: nbstephenlu@gmail.com Language: CET-6  Education  Master of Engineering:
@@ -36,19 +36,19 @@ GPA 3.2 / 4.0
     
     <item>
       <title>Links</title>
-      <link>http://page.shawnlu.ml/links/</link>
+      <link>https://page.shawnlu.ml/links/</link>
       <pubDate>Mon, 29 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://page.shawnlu.ml/links/</guid>
+      <guid>https://page.shawnlu.ml/links/</guid>
       <description>Shawn and his friends.</description>
     </item>
     
     <item>
       <title>About</title>
-      <link>http://page.shawnlu.ml/about/</link>
+      <link>https://page.shawnlu.ml/about/</link>
       <pubDate>Mon, 29 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://page.shawnlu.ml/about/</guid>
+      <guid>https://page.shawnlu.ml/about/</guid>
       <description>Hugo is a static site engine written in Go.
 It makes use of a variety of open source projects including:
  Cobra Viper J Walter Weatherman Cast  Learn more and contribute on GitHub.</description>
@@ -56,10 +56,10 @@ It makes use of a variety of open source projects including:
     
     <item>
       <title>A CUDA Version of smallpt</title>
-      <link>http://page.shawnlu.ml/post/a-cuda-version-of-smallpt/</link>
+      <link>https://page.shawnlu.ml/post/a-cuda-version-of-smallpt/</link>
       <pubDate>Sun, 22 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://page.shawnlu.ml/post/a-cuda-version-of-smallpt/</guid>
+      <guid>https://page.shawnlu.ml/post/a-cuda-version-of-smallpt/</guid>
       <description>作为一个机器学习方向的研究生，把第一篇技术博客献给图形学也是一个很奇妙的事情。
 这原本是一个GPU并行编程的课程设计，选择了对smallpt光线追踪进行CUDA移植，与好友Bingo合作完成并进行了一定的优化。代码已开源至smallptCuda
  运行结果
@@ -69,10 +69,10 @@ Cuda部分的入门教程较多，可以参考CUDA C/C++ Basics以及An Even Eas
     
     <item>
       <title>Hello</title>
-      <link>http://page.shawnlu.ml/post/hello/</link>
+      <link>https://page.shawnlu.ml/post/hello/</link>
       <pubDate>Mon, 29 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://page.shawnlu.ml/post/hello/</guid>
+      <guid>https://page.shawnlu.ml/post/hello/</guid>
       <description> Hello. It&amp;rsquo;s Shawn Lu. This is my first post. Welcome to my personal page. </description>
     </item>
     
