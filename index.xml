@@ -7,10 +7,32 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you likes to quote or reproduce.</copyright>
-    <lastBuildDate>Mon, 29 Jan 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 03 May 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://page.shawnlu.ml/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Resume</title>
+      <link>http://page.shawnlu.ml/resume/</link>
+      <pubDate>Thu, 03 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://page.shawnlu.ml/resume/</guid>
+      <description>Personal Information  Name: 陆啸
+ Gender: Male
+ Email: nbstephenlu@gmail.com Language: CET-6  Education  Master of Engineering:
+Sept.2017 - July.2020(Expected)
+University of Electronic Science and Technology of China
+Major: Computer Science and Technology
+Lab: SMILE Lab
+Research Direction: Machine Learning, Deep Learning, Subspace Clustering
+ Bachelor of Engineering:
+Sept.2012 - July.2016
+Zhengzhou University
+Major: Electronic Information Science and Technology
+GPA 3.2 / 4.0
+  Work Experience  Media Engine Develop:</description>
+    </item>
     
     <item>
       <title>Links</title>
