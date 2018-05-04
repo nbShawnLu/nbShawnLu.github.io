@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Page on Shawn Lu&#39;s Page</title>
-    <link>https://page.shawnlu.ml/tags/page/</link>
-    <description>Recent content in Page on Shawn Lu&#39;s Page</description>
+    <title>Https on Shawn Lu&#39;s Page</title>
+    <link>https://page.shawnlu.ml/tags/https/</link>
+    <description>Recent content in Https on Shawn Lu&#39;s Page</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you likes to quote or reproduce.</copyright>
     <lastBuildDate>Fri, 04 May 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://page.shawnlu.ml/tags/page/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://page.shawnlu.ml/tags/https/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -28,15 +28,6 @@ Usage Certbot网站给出了很无脑的部署教程，大家选择了自己的�
 以Nginx on CentOS 7 为例，大概可以概括为：
 1.启用EPEL repository $ yum -y install yum-utils $ yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional  2.安装Certbot $ sudo yum install certbot-nginx  3.获取并安装证书 $ sudo certbot --nginx   期间会提示你输入邮箱，用于发送证书续期邮件。此外如果你的站点服务器如果监听了多个域名，这一步会提示你选择需要部署SSL的站点，或者输入空格表示全部。
  4.由于Let&amp;rsquo;s Encrypt的证书只有90天有效期，你需要在失效前更新证书。首先你需要测试自动续期功能是否可以工作 $ sudo certbot renew --dry-run  5.如果上一步正常的话，你可以定时调用certbot renew来检测是否需要续期并自动续期。例如你可以利用以下指令创建一个定时检测线程。 $ 0 0,12 * * * python -c &#39;import random; import time; time.</description>
-    </item>
-    
-    <item>
-      <title>Hello</title>
-      <link>https://page.shawnlu.ml/post/hello/</link>
-      <pubDate>Mon, 29 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://page.shawnlu.ml/post/hello/</guid>
-      <description> Hello. It&amp;rsquo;s Shawn Lu. This is my first post. Welcome to my personal page. </description>
     </item>
     
   </channel>
