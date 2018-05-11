@@ -5,7 +5,11 @@
   <meta charset="utf-8" />
 
   
-  <title>Shawn Lu&#39;s Page</title>
+  <title>
+  Tag → machine-learning
+  
+   | Shawn Lu&#39;s Page
+</title>
 
   
   
@@ -29,7 +33,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Shawn Lu&#39;s Page" />
   <meta property="og:description" content="Machine Learning@SMILE Lab, UESTC" />
-  <meta property="og:url" content="https://page.shawnlu.ml/" />
+  <meta property="og:url" content="https://page.shawnlu.ml/tags/machine-learning/" />
   <meta property="og:image" content="https://page.shawnlu.ml/img/avatar.jpg" />
 
 
@@ -38,7 +42,7 @@
 <meta name="generator" content="Hugo 0.39" />
 
 
-<link rel="canonical" href="https://page.shawnlu.ml/" />
+<link rel="canonical" href="https://page.shawnlu.ml/tags/machine-learning/" />
 <link rel="alternative" href="https://page.shawnlu.ml/index.xml" title="Shawn Lu&#39;s Page" type="application/atom+xml" />
 
 
@@ -73,6 +77,8 @@
 
 
 
+<link rel="stylesheet" href="//cdn.bootcss.com/video.js/6.2.8/alt/video-js-cdn.min.css" />
+
 <link rel="stylesheet" href="https://page.shawnlu.ml/css/bundle.css" />
 
 
@@ -106,7 +112,7 @@
   <header class="site-header">
   <img class="avatar" src="https://page.shawnlu.ml/img/avatar.jpg" alt="Avatar">
   
-  <h1 class="title">Shawn Lu&#39;s Page</h1>
+  <h2 class="title">Shawn Lu&#39;s Page</h2>
   
   <p class="subtitle">Machine Learning@SMILE Lab, UESTC</p>
   <button class="menu-toggle" type="button">
@@ -120,8 +126,6 @@
       
       
         <li class="menu-item
-            
-              is-active
             
             
             ">
@@ -224,7 +228,7 @@
 
   <section class="main post-list">
     <header class="list-header offscreen">
-      <h2 class="list-label">All Posts</h2>
+      <h2 class="list-label">Posts List</h2>
     </header>
     
     
@@ -248,58 +252,6 @@ The goal of subspace clustering is to find the number of subspaces $n$, their di
 </article>
 
       
-        <article class="post-entry">
-  <header class="post-header">
-    <h3 class="post-title"><a href="https://page.shawnlu.ml/post/ssl/" class="post-link">三分钟为你的博客部署SSL证书</a></h3>
-    <p class="post-meta">@Shawn Lu · May 4, 2018 · 1 min read</p>
-  </header>
-  
-  <p class="post-summary">前言 这篇教程需要有站点服务器的Shell权限和Root权限。
-SSL SSL证书就是遵守SSL协议，由受信任的数字证书颁发机构CA，在验证服务器身份后颁发，具有服务器身份验证和数据传输加密功能。
-HTTPS即HTTP下加入SSL层，一方面可以通过证书确认网站的真实性，另一方面可以保证数据传输安全，避免网页被篡改，还可以使自己的博客看起来更正规有逼格。
-SSL证书按大类一般可分为 DV SSL, OV SSL, EV SSL证书，也叫做域名型、企业型、增强型证书。
-Let’s Encrypt Let’s Encrypt是一个叫ISRG(Internet Security Research Group)的组织推出的免费安全证书计划，提供了免费的DV SSL单域名证书，又于2018年推出ACME v2泛域名证书功能，有兴趣的小伙伴可以尝试一下。
-Certbot Certbot是一个SSL/TLS自动部署工具，由EFF开发，能够自动获取Let’s Encrypt的证书和部署在站点服务器上。
-Usage Certbot网站给出了很无脑的部署教程，大家选择了自己的站点服务和系统发行版后会自动生成对应的教程。
-以Nginx on CentOS 7 为例，大概可以概括为：
-1.启用EPEL repository $ yum -y install yum-utils $ yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional  2.安装Certbot $ sudo yum install certbot-nginx  3.获取并安装证书 $ sudo certbot --nginx   期间会提示你输入邮箱，用于发送证书续期邮件。此外如果你的站点服务器如果监听了多个域名，这一步会提示你选择需要部署SSL的站点，或者输入空格表示全部。
- 4.由于Let’s Encrypt的证书只有90天有效期，你需要在失效前更新证书。首先你需要测试自动续期功能是否可以工作 $ sudo certbot renew --dry-run  5.如果上一步正常的话，你可以定时调用certbot renew来检测是否需要续期并自动续期。例如你可以利用以下指令创建一个定时检测线程。 $ 0 0,12 * * * python -c &#39;import random; import time; time.</p>
-  <footer class="post-footer">
-    <a class="read-more" href="https://page.shawnlu.ml/post/ssl/">Read More →</a>
-  </footer>
-</article>
-
-      
-        <article class="post-entry">
-  <header class="post-header">
-    <h3 class="post-title"><a href="https://page.shawnlu.ml/post/a-cuda-version-of-smallpt/" class="post-link">A CUDA Version of smallpt</a></h3>
-    <p class="post-meta">@Shawn Lu · Apr 22, 2018 · 1 min read</p>
-  </header>
-  
-  <p class="post-summary">作为一个机器学习方向的研究生，把第一篇技术博客献给图形学也是一个很奇妙的事情。
-这原本是一个GPU并行编程的课程设计，选择了对smallpt光线追踪进行CUDA移植，与好友Bingo合作完成并进行了一定的优化。代码已开源至smallptCuda
- 运行结果
-Cuda部分的入门教程较多，可以参考CUDA C/C&#43;&#43; Basics以及An Even Easier Introduction to CUDA
- Benchmark     GTX1080Ti Intel Xeon E5 (6C12T) 2.80GHz     Resolution 1024*768 1024*768   SPP 5000 5000   Cost Time 4.3s 32.1min        GTX750 Intel Xeon E5 (8C16T) 2.40GHz     Resolution 768*768 768*768   SPP 2048 2048   Cost Time 19.</p>
-  <footer class="post-footer">
-    <a class="read-more" href="https://page.shawnlu.ml/post/a-cuda-version-of-smallpt/">Read More →</a>
-  </footer>
-</article>
-
-      
-        <article class="post-entry">
-  <header class="post-header">
-    <h3 class="post-title"><a href="https://page.shawnlu.ml/post/hello/" class="post-link">Hello</a></h3>
-    <p class="post-meta">@Shawn Lu · Jan 29, 2018 · 1 min read</p>
-  </header>
-  
-  <p class="post-summary"> Hello. It’s Shawn Lu. This is my first post. Welcome to my personal page. </p>
-  <footer class="post-footer">
-    <a class="read-more" href="https://page.shawnlu.ml/post/hello/">Read More →</a>
-  </footer>
-</article>
-
-      
     
     
   </section>
@@ -310,6 +262,30 @@ Cuda部分的入门教程较多，可以参考CUDA C/C&#43;&#43; Basics以及An 
 </footer>
 
 
+
+<script async src="//cdn.bootcss.com/video.js/6.2.8/alt/video.novtt.min.js"></script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']],
+      processEscapes: true,
+      processEnvironments: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      TeX: { equationNumbers: { autoNumber: "AMS" },
+      extensions: ["AMSmath.js", "AMSsymbols.js"] }
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+  // Fix <code> tags after MathJax finishes running. This is a
+  // hack to overcome a shortcoming of Markdown. Discussion at
+  // https://github.com/mojombo/jekyll/issues/199
+  MathJax.Hub.Queue(() => {
+    MathJax.Hub.getAllJax().map(v => v.SourceElement().parentNode.className += ' has-jax');
+  });
+</script>
 
 <script src="https://page.shawnlu.ml/js/bundle.js"></script>
 

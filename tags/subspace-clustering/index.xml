@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Subspace Clustering on Shawn Lu&#39;s Page</title>
+    <link>https://page.shawnlu.ml/tags/subspace-clustering/</link>
+    <description>Recent content in Subspace Clustering on Shawn Lu&#39;s Page</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you likes to quote or reproduce.</copyright>
+    <lastBuildDate>Fri, 11 May 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://page.shawnlu.ml/tags/subspace-clustering/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Introduction to Subspace Clustering</title>
+      <link>https://page.shawnlu.ml/post/subspace-clustering/</link>
+      <pubDate>Fri, 11 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://page.shawnlu.ml/post/subspace-clustering/</guid>
+      <description>THE SUBSPACE CLUSTERING PROBLEM Modeling a collection of data points with a union of subspaces.
+Specifically,
+Given set of points $\{x_j\in\mathbb{R}^D\}_{j=1}^N$
+Drawn from an unknown union of linear or affine subspaces $\{S_i\}_{i=1}^n$ of unknown dimendions $d_i=dim(S_i)$
+The subspaces can be described as $S_i=\{x\in\mathbb R^D:x=\mu_i+U_iy\}$, i=1,...,n
+$y\in\mathbb R^{d_i}$ is a low-dimensional representation for point $x$
+The goal of subspace clustering is to find the number of subspaces $n$, their dimensions $\{d_i\}_{i=1}^n$, the subspace bases $\{U_i\}_{i=1}^n$, the points $\{\mu_i\}_{i=1}^n$, and the segmentation of the points according to the subspaces.</description>
+    </item>
+    
+  </channel>
+</rss>

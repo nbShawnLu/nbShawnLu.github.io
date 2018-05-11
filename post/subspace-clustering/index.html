@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8" />
+
+  
+  <title>Introduction to Subspace Clustering</title>
+
+  
+  
+
+
+
+
+
+  
+  <meta name="author" content="Shawn Lu" />
+  <meta name="description" content="THE SUBSPACE CLUSTERING PROBLEM Modeling a collection of data points with a union of subspaces.
+Specifically,
+Given set of points $\{x_j\in\mathbb{R}^D\}_{j=1}^N$
+Drawn from an unknown union of linear or affine subspaces $\{S_i\}_{i=1}^n$ of unknown dimendions $d_i=dim(S_i)$
+The subspaces can be described as $S_i=\{x\in\mathbb R^D:x=\mu_i&#43;U_iy\}$, i=1,...,n
+$y\in\mathbb R^{d_i}$ is a low-dimensional representation for point $x$
+The goal of subspace clustering is to find the number of subspaces $n$, their dimensions $\{d_i\}_{i=1}^n$, the subspace bases $\{U_i\}_{i=1}^n$, the points $\{\mu_i\}_{i=1}^n$, and the segmentation of the points according to the subspaces." />
+
+  
+  
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@gohugoio" />
+    <meta name="twitter:title" content="Introduction to Subspace Clustering" />
+    <meta name="twitter:description" content="THE SUBSPACE CLUSTERING PROBLEM Modeling a collection of data points with a union of subspaces.
+Specifically,
+Given set of points $\{x_j\in\mathbb{R}^D\}_{j=1}^N$
+Drawn from an unknown union of linear or affine subspaces $\{S_i\}_{i=1}^n$ of unknown dimendions $d_i=dim(S_i)$
+The subspaces can be described as $S_i=\{x\in\mathbb R^D:x=\mu_i&#43;U_iy\}$, i=1,...,n
+$y\in\mathbb R^{d_i}$ is a low-dimensional representation for point $x$
+The goal of subspace clustering is to find the number of subspaces $n$, their dimensions $\{d_i\}_{i=1}^n$, the subspace bases $\{U_i\}_{i=1}^n$, the points $\{\mu_i\}_{i=1}^n$, and the segmentation of the points according to the subspaces." />
+    <meta name="twitter:image" content="https://page.shawnlu.ml/img/avatar.jpg" />
+  
+
+  
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Introduction to Subspace Clustering" />
+  <meta property="og:description" content="THE SUBSPACE CLUSTERING PROBLEM Modeling a collection of data points with a union of subspaces.
+Specifically,
+Given set of points $\{x_j\in\mathbb{R}^D\}_{j=1}^N$
+Drawn from an unknown union of linear or affine subspaces $\{S_i\}_{i=1}^n$ of unknown dimendions $d_i=dim(S_i)$
+The subspaces can be described as $S_i=\{x\in\mathbb R^D:x=\mu_i&#43;U_iy\}$, i=1,...,n
+$y\in\mathbb R^{d_i}$ is a low-dimensional representation for point $x$
+The goal of subspace clustering is to find the number of subspaces $n$, their dimensions $\{d_i\}_{i=1}^n$, the subspace bases $\{U_i\}_{i=1}^n$, the points $\{\mu_i\}_{i=1}^n$, and the segmentation of the points according to the subspaces." />
+  <meta property="og:url" content="https://page.shawnlu.ml/post/subspace-clustering/" />
+  <meta property="og:image" content="https://page.shawnlu.ml/img/avatar.jpg" />
+
+
+
+
+<meta name="generator" content="Hugo 0.39" />
+
+
+<link rel="canonical" href="https://page.shawnlu.ml/post/subspace-clustering/" />
+<link rel="alternative" href="https://page.shawnlu.ml/index.xml" title="Shawn Lu&#39;s Page" type="application/atom+xml" />
+
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+
+
+<meta name="robots" content="index,follow" />
+<meta name="referrer" content="origin-when-cross-origin" />
+
+
+
+
+
+
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Shawn Lu&#39;s Page" />
+<meta name="msapplication-tooltip" content="Shawn Lu&#39;s Page" />
+<meta name='msapplication-navbutton-color' content="#5fbf5e" />
+<meta name="msapplication-TileColor" content="#5fbf5e" />
+<meta name="msapplication-TileImage" content="/img/tile-image-windows.png" />
+<link rel="icon" href="https://page.shawnlu.ml/img/favicon.ico" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://page.shawnlu.ml/img/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://page.shawnlu.ml/img/favicon-32x32.png" />
+<link rel="icon" sizes="192x192" href="https://page.shawnlu.ml/img/touch-icon-android.png" />
+<link rel="apple-touch-icon" href="https://page.shawnlu.ml/img/touch-icon-apple.png" />
+<link rel="mask-icon" href="https://page.shawnlu.ml/img/safari-pinned-tab.svg" color="#5fbf5e" />
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/video.js/6.2.8/alt/video-js-cdn.min.css" />
+
+<link rel="stylesheet" href="https://page.shawnlu.ml/css/bundle.css" />
+
+
+  
+  <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdn.bootcss.com/video.js/6.2.8/ie8/videojs-ie8.min.js"></script>
+  <![endif]-->
+
+<!--[if lte IE 11]>
+    <script src="//cdn.bootcss.com/classlist/1.1.20170427/classList.min.js"></script>
+  <![endif]-->
+
+
+<script src="//cdn.bootcss.com/object-fit-images/3.2.3/ofi.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/smooth-scroll/12.1.4/js/smooth-scroll.polyfills.min.js"></script>
+
+
+</head>
+  <body>
+    
+    <div class="suspension">
+      <a title="Go to top" class="to-top is-hide"><span class="icon icon-up"></span></a>
+      
+        
+      
+    </div>
+    
+    
+  <header class="site-header">
+  <img class="avatar" src="https://page.shawnlu.ml/img/avatar.jpg" alt="Avatar">
+  
+  <h2 class="title">Shawn Lu&#39;s Page</h2>
+  
+  <p class="subtitle">Machine Learning@SMILE Lab, UESTC</p>
+  <button class="menu-toggle" type="button">
+    <span class="icon icon-menu"></span>
+  </button>
+  <nav class="site-menu collapsed">
+    <h2 class="offscreen">Main Menu</h2>
+    <ul class="menu-list">
+      
+      
+      
+      
+        <li class="menu-item
+            
+            
+            
+              is-active
+            ">
+            <a href="https://page.shawnlu.ml/">Home</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="https://page.shawnlu.ml/tags/">Tags</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="https://page.shawnlu.ml/resume/">Resume</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="https://page.shawnlu.ml/links/">Links</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="https://page.shawnlu.ml/about/">About</a>
+          </li>
+      
+    </ul>
+  </nav>
+  <nav class="social-menu collapsed">
+    <h2 class="offscreen">Social Networks</h2>
+    <ul class="social-list">
+
+      
+      <li class="social-item">
+        <a href="mailto:nbstephenlu@gmail.com" title="Email"><span class="icon icon-email"></span></a>
+      </li>
+
+      
+      <li class="social-item">
+        <a href="//github.com/nbShawnLu" title="GitHub"><span class="icon icon-github"></span></a>
+      </li>
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <li class="social-item">
+        <a href="//www.linkedin.com/in/nbshawnlu" title="Linkedin"><span class="icon icon-linkedin"></span></a>
+      </li>
+
+      <li class="social-item">
+        <a href="//www.zhihu.com/people/ShawnLu" title="Zhihu"><span class="icon icon-zhihu"></span></a>
+      </li>
+
+      
+
+      
+
+      <li class="social-item">
+        <a href="https://page.shawnlu.ml/index.xml"><span class="icon icon-rss" title="RSS"></span></a>
+      </li>
+
+    </ul>
+  </nav>
+</header>
+
+  <section class="main post-detail">
+    <header class="post-header">
+      <h1 class="post-title">Introduction to Subspace Clustering</h1>
+      <p class="post-meta">@Shawn Lu · May 11, 2018 · 3 min read</p>
+    </header>
+    <article class="post-content">
+
+<h2 id="the-subspace-clustering-problem">THE SUBSPACE CLUSTERING PROBLEM</h2>
+
+<p><strong>Modeling a collection of data points with a union of subspaces.</strong></p>
+
+<p>Specifically,<br />
+Given set of points <code>$\{x_j\in\mathbb{R}^D\}_{j=1}^N$</code><br />
+Drawn from an unknown union of linear or affine subspaces <code>$\{S_i\}_{i=1}^n$</code> of unknown dimendions <code>$d_i=dim(S_i)$</code><br />
+The subspaces can be described as <code>$S_i=\{x\in\mathbb R^D:x=\mu_i+U_iy\}$, i=1,...,n</code><br />
+<code>$y\in\mathbb R^{d_i}$</code> is a low-dimensional representation for point $x$</p>
+
+<p><strong>The goal of subspace clustering is to find the number of subspaces $n$, their dimensions <code>$\{d_i\}_{i=1}^n$</code>, the subspace bases <code>$\{U_i\}_{i=1}^n$</code>, the points <code>$\{\mu_i\}_{i=1}^n$</code>, and the segmentation of the points according to the subspaces.</strong></p>
+
+<h3 id="challenges">CHALLENGES</h3>
+
+<ol>
+<li>Strong coupling between data segmentation and model estimation.<br />
+In practice, neither the segmentation of the data nor the subspace parameters are known, and one needs to solve both problems simultaneously.<br /></li>
+<li>The distribution of the data inside the subspaces is generally unknown.<br /></li>
+<li>The position and orientation of the subspaces relative to each other can be arbitrary.<br />
+n linear subspaces are disjoint if every two subspaces intersect only at the origin.<br />
+n linear subspaces are independent if the dimension of their sum is equal to the sum of their dimensions.<br />
+Independent subspaces are disjoint, but the converse is not always true.<br /></li>
+<li>The data can be corrupted by noise, missing entries, and outliers.<br /></li>
+<li>Model selection<br />
+The challenge is to find a model-selection criteria that favors a small number of subspaces of small dimensions.<br /></li>
+</ol>
+
+<h2 id="algorithms">ALGORITHMS</h2>
+
+<h3 id="algebraic-algorithms">ALGEBRAIC ALGORITHMS</h3>
+
+<h4 id="matrix-factorization-based-algorithms">MATRIX FACTORIZATION-BASED ALGORITHMS</h4>
+
+<p><strong>These algorithms obtain the segmentation of the data from a low-rank factorization of the data matri X. Hence, they are a natural extension of PCA from one to multiple independent linear subspaces.</strong><br />
+Specifically,<br />
+Let <code>$X_i\in\mathbb{R}^{D\times{N_i}}$</code> be the matrix containing the $N_i$ points in subspace $i$<br />
+The columns of the data matrix can be sorted according to the n subspaces as <code>$\begin{bmatrix}X_1 &amp; X_2 &amp; \cdots &amp; X_n\end{bmatrix} = XT$</code>, where $T\in\mathbb{R}^{N\times N}$is an unknown permutation matrix.<br />
+It can be factorized as <code>$X_i=U_iY_i$</code> where <code>$U_i\in\mathbb{R}^{D\times d_i}$</code> is an orthogonal basis for subspace $i$ and <code>$Y_i\in\mathbb{R}^{d_i\times N_i}$</code> is the low-dimensional representation of the points.<br />
+Therefore, if the subspaces are <strong>independent</strong>, then <code>$r\triangleq rank(X)=\sum_{i=1}^{n}{d_i}\le{min\{D,N\}}$</code> and
+<code>$$
+XT=\begin{bmatrix}U_1 &amp; U_2 &amp; ... &amp; U_n\end{bmatrix}\begin{bmatrix}Y_1 &amp; &amp; &amp;\\ &amp; Y_2 &amp; &amp;\\&amp; &amp; \ddots &amp; \\ &amp; &amp; &amp; Y_n\end{bmatrix}\triangleq UY
+$$</code><br />
+where $U\in\mathbb{R}^{D\times r}$ and $Y\in\mathbb{R}^{r\times N}$<br />
+<strong>The subspace clustering problem is then equivalent to finding a permutation matrix $T$, such that $XT$ admits a rank-r factorization into a matrix $U$ and a block diagonal matrix $Y$.</strong><br />
+Specifically,<br />
+Let $X = U\Sigma V^T$ be the rank-r SVD of the data matrix,  $U\in\mathbb{R}^{D\times r}$,  $\Sigma\in\mathbb{R}^{r\times r}$, $V\in\mathbb{R}^{N\times r}$, let $Q=VV^T\in\mathbb{R}^{N\times N}$, in the absence of noise, can be used to obtain the segmentation of the data by applying spectral clustering to the eigenvectors
+of Q or by sorting and thresholding the entries of Q.</p>
+
+<p>Cons:<br />
+1. Sensitive to noise<br />
+2. Requires knowledge of the rank of $X$<br />
+3. Do not provide a method for computing the number of subspaces, n</p>
+
+<p>//to be continued</p>
+
+<h4 id="generalized-pca">GENERALIZED PCA</h4>
+
+<h4 id="iterative-methods">ITERATIVE METHODS</h4>
+
+<h3 id="statistical-methods">STATISTICAL METHODS</h3>
+
+<h3 id="spectral-clustering-based-methods">SPECTRAL CLUSTERING-BASED METHODS</h3>
+
+<h2 id="references">REFERENCES</h2>
+
+<p>Parsons, Lance, Ehtesham Haque, and Huan Liu. &ldquo;Subspace clustering for high dimensional data: a review.&rdquo; Acm Sigkdd Explorations Newsletter 6.1 (2004): 90-105.</p>
+
+<p>Vidal, René. &ldquo;Subspace clustering.&rdquo; IEEE Signal Processing Magazine 28.2 (2011): 52-68.</p>
+</article>
+    <footer class="post-footer">
+      
+      <ul class="post-tags">
+        
+          <li><a href="https://page.shawnlu.ml/tags/subspace-clustering"><span class="tag">Subspace Clustering</span></a></li>
+        
+          <li><a href="https://page.shawnlu.ml/tags/machine-learning"><span class="tag">Machine Learning</span></a></li>
+        
+      </ul>
+      
+      <p class="post-copyright">
+        © This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you likes to quote or reproduce.
+      </p>
+    </footer>
+    
+      
+    
+  </section>
+  <footer class="site-footer">
+  <p>© 2017-2018 Shawn Lu&#39;s Page</p>
+  <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with theme <a href="https://github.com/laozhu/hugo-nuo" target="_blank">Nuo</a>.</p>
+  
+</footer>
+
+
+
+<script async src="//cdn.bootcss.com/video.js/6.2.8/alt/video.novtt.min.js"></script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']],
+      processEscapes: true,
+      processEnvironments: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      TeX: { equationNumbers: { autoNumber: "AMS" },
+      extensions: ["AMSmath.js", "AMSsymbols.js"] }
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+  // Fix <code> tags after MathJax finishes running. This is a
+  // hack to overcome a shortcoming of Markdown. Discussion at
+  // https://github.com/mojombo/jekyll/issues/199
+  MathJax.Hub.Queue(() => {
+    MathJax.Hub.getAllJax().map(v => v.SourceElement().parentNode.className += ' has-jax');
+  });
+</script>
+
+<script src="https://page.shawnlu.ml/js/bundle.js"></script>
+
+
+
+
+  </body>
+</html>
