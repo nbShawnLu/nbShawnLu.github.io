@@ -249,7 +249,7 @@ The goal of subspace clustering is to find the number of subspaces $n$, their di
   <section class="main post-detail">
     <header class="post-header">
       <h1 class="post-title">Introduction to Subspace Clustering</h1>
-      <p class="post-meta">@Shawn Lu · May 11, 2018 · 3 min read</p>
+      <p class="post-meta">@Shawn Lu · May 11, 2018 · 9 min read</p>
     </header>
     <article class="post-content">
 
@@ -282,18 +282,18 @@ The challenge is to find a model-selection criteria that favors a small number o
 
 <h2 id="algorithms">ALGORITHMS</h2>
 
-<h3 id="algebraic-algorithms">ALGEBRAIC ALGORITHMS</h3>
+<h3 id="algebraic-algorithms">·ALGEBRAIC ALGORITHMS</h3>
 
 <h4 id="matrix-factorization-based-algorithms">MATRIX FACTORIZATION-BASED ALGORITHMS</h4>
 
 <p><strong>These algorithms obtain the segmentation of the data from a low-rank factorization of the data matri X. Hence, they are a natural extension of PCA from one to multiple independent linear subspaces.</strong><br />
 Specifically,<br />
-Let <code>$X_i\in\mathbb{R}^{D\times{N_i}}$</code> be the matrix containing the $N_i$ points in subspace $i$<br />
+Let <code>$X_i\in\mathbb{R}^{D\times{N_i}}$</code> be the matrix containing the <code>$N_i$</code> points in subspace $i$<br />
 The columns of the data matrix can be sorted according to the n subspaces as <code>$\begin{bmatrix}X_1 &amp; X_2 &amp; \cdots &amp; X_n\end{bmatrix} = XT$</code>, where $T\in\mathbb{R}^{N\times N}$is an unknown permutation matrix.<br />
 It can be factorized as <code>$X_i=U_iY_i$</code> where <code>$U_i\in\mathbb{R}^{D\times d_i}$</code> is an orthogonal basis for subspace $i$ and <code>$Y_i\in\mathbb{R}^{d_i\times N_i}$</code> is the low-dimensional representation of the points.<br />
 Therefore, if the subspaces are <strong>independent</strong>, then <code>$r\triangleq rank(X)=\sum_{i=1}^{n}{d_i}\le{min\{D,N\}}$</code> and
 <code>$$
-XT=\begin{bmatrix}U_1 &amp; U_2 &amp; ... &amp; U_n\end{bmatrix}\begin{bmatrix}Y_1 &amp; &amp; &amp;\\ &amp; Y_2 &amp; &amp;\\&amp; &amp; \ddots &amp; \\ &amp; &amp; &amp; Y_n\end{bmatrix}\triangleq UY
+XT=\begin{bmatrix}U_1 &amp; U_2 &amp; \cdots &amp; U_n\end{bmatrix}\begin{bmatrix}Y_1 &amp; &amp; &amp;\\ &amp; Y_2 &amp; &amp;\\&amp; &amp; \ddots &amp; \\ &amp; &amp; &amp; Y_n\end{bmatrix}\triangleq UY
 $$</code><br />
 where $U\in\mathbb{R}^{D\times r}$ and $Y\in\mathbb{R}^{r\times N}$<br />
 <strong>The subspace clustering problem is then equivalent to finding a permutation matrix $T$, such that $XT$ admits a rank-r factorization into a matrix $U$ and a block diagonal matrix $Y$.</strong><br />
@@ -304,17 +304,106 @@ of Q or by sorting and thresholding the entries of Q.</p>
 <p>Cons:<br />
 1. Sensitive to noise<br />
 2. Requires knowledge of the rank of $X$<br />
-3. Do not provide a method for computing the number of subspaces, n</p>
-
-<p>//to be continued</p>
+3. Do not provide a method for computing the number of subspaces, $n$</p>
 
 <h4 id="generalized-pca">GENERALIZED PCA</h4>
 
+<p><strong>The main idea behind GPCA is that one can fit a union of n subspaces with a set of polynomials of degree n, whose derivatives at a point give a vector normal to the subspace containing that point.</strong><br />
+<strong>The first step,</strong> is to project the data points onto a subspace of $\mathbb{R}^D$ of dimension <code>$r=d_{max}+1$</code><br />
+<strong>The second step,</strong> is to fit a homogeneous polynomial of degree $n$ to the (projected) data.<br />
+For instance, that the data came from the union of two planes in $\mathbb{R}^3$, each one with normal vector <code>$b_i\in\mathbb{R}^3$</code>. The union of the two planes can be represented as a set of points, such that <code>$p(x) = (b_1^Tx)(b_2^Tx)=0$</code>.The equation of a conic of the form <code>$c_1x_1^2+c_2x_1x_2+c_3x_1x_3+c_4x_2^2+c_5x_2x_3+c_6x_3^2=0$</code>.<br />
+More generally, data drawn from the union of n subspaces of $\mathbb{R}^r$ can be represented with polynomials of the form <code>$p(x)=(b_1^Tx)...(b_n^Tx)=0$</code>, where the vector <code>$b_i\in\mathbb{R}^r$</code> is orthogonal to <code>$S_i$</code>. Each polynomial is of degree $n$ in $x$ and can be written as <code>$c^Tv_n(x)$</code>, where $c$ is the vector of coefficients and <code>$v_n(x)$</code> is the vector of all monomials of degree $n$ in $x$. There are <code>$$M_n(r)=\binom{n+r-1}{n}$$</code> independent monomials; hence,<code>$c\in\mathbb{R}^{M_n(r)}$</code>.<br />
+In the case of noiseless data, the vector of coefficients $c$ of each polynomial can be computed from <code>$c^T\begin{bmatrix}v_n(x_1)&amp;v_n(x_2)&amp;\cdots&amp;v_n(x_N)\end{bmatrix}\triangleq c^TV_n=0^T$</code> and the number of polynomials is simply the dimension of the null space of <code>$V_n$</code>.<br />
+<strong>The last step,</strong> is to compute the normal vectors <code>$b_i$</code> from the vector of coefficients $c$.<br />
+This can be done by taking the derivatives of the polynomials at a data point. <code>$\nabla p(x)\sim b_i$</code> if <code>$x\in S_i$</code>.</p>
+
+<p>Pros:<br />
+1. It is an algebraic algorithm; thus, it is computationally cheap when n and d are small.<br />
+2. Intersections between subspaces are automatically allowed; hence, GPCA can deal with both independent and dependent subspaces.<br />
+3. In the noiseless case, it does not require the number of subspaces or their dimensions to be known beforehand.<br />
+Cons:<br />
+1. Its complexity increases exponentially with $n$ and <code>${d_i}$</code>.<br />
+2. The vector $c$ is computed using least squares; thus, the computation of $c$ is sensitive to outliers.<br />
+3. The least-squares fit does not take into account nonlinear constraints among the entries of $c$.</p>
+
 <h4 id="iterative-methods">ITERATIVE METHODS</h4>
 
-<h3 id="statistical-methods">STATISTICAL METHODS</h3>
+<p><strong>Given an initial segmentation, we can fit a subspace to each group using classical PCA. Then, given a PCA model for each subspace, we can assign each data point to its closest subspace. By iterating these two steps, we can obtain a refined estimate of the subspaces and segmentation.</strong><br />
+Let <code>$w_{ij}=1$</code> if point $j$ belongs to subspace $i$ and <code>$w_{ij}=0$</code> otherwise.<br />
+We can do so by minimizing the sum of the squared distances from each data point to its own subspace
+<code>$$
+\min_{\{\mu_i\},\{U_i\},\{y_i\},\{w_i\}}\quad\sum_{i=1}^n\sum_{j=1}^Nw_{ij}||x_j-\mu_i-U_iy_j||^2\\
+s.t.\quad w_{ij}\in\{0,1\}\quad and\quad \sum_{i=1}^nw_{ij}=1.
+$$</code>
+Given <code>$\{\mu_i\}$</code>,<code>$\{U_i\}$</code>, and <code>$\{y_i\}$</code>, the optimal value for <code>$w_{ij}$</code> is
+<code>$$
+w_{ij}=\begin{cases}1\quad if\quad i=arg\min_{k=1,...,n}||x_j-\mu_k-U_ky_j||^2\\
+0\quad else\end{cases}
+$$</code>
+Given <code>$w_{ij}=1$</code>, the cost function decouples as the sum of $n$ cost functions, one per subspace. Since each cost function is identical to that minimized by standard PCA, the optimal values for <code>$\mu_i$</code>,<code>$U_i$</code>, and <code>$y_i$</code> are obtained by applying PCA to each group of points.</p>
 
-<h3 id="spectral-clustering-based-methods">SPECTRAL CLUSTERING-BASED METHODS</h3>
+<p>Pros:<br />
+1. Simplicity since it alternates between assigning points to subspaces and estimating the subspaces via PCA.<br />
+2. It can handle both linear and affine subspaces explicitly.<br />
+3. It converges to a local optimum in a finite number of iterations.<br />
+Cons:<br />
+1. Its convergence to the global optimum depends on a good initialization.<br />
+2. K-subspaces is sensitive to outliers, partly due to the use of the l2-norm.<br />
+3. K-subspaces requires $n$ and <code>$\{d_i\}_{i=1}^n$</code>to be known beforehand.</p>
+
+<h3 id="statistical-methods">·STATISTICAL METHODS</h3>
+
+<h4 id="mixture-of-probabilistic-pca">MIXTURE OF PROBABILISTIC PCA</h4>
+
+<p>Probabilistic PCA(PPCA) assumes that the data within a subspace S is generated as $x=\mu+Uy+\epsilon$, where $y$ and $\epsilon$ are independent zero-mean Gaussian random vectors with covariance matrices $I$ and $\sigma^2I$. Therefore, $x$ is also Gaussian with mean $\mu$ and covariance matrix $\Sigma=UU^T+\sigma^2I$.<br />
+PPCA can be naturally extended to a generative model for a union of subspaces <code>$\cup_{i=1}^nS_i$</code> by using a mixture of PPCA (MPPCA) model.<br />
+<strong>MPPCA uses a mixture of Gaussians model</strong>
+<code>$$
+p(x)=\sum_{i=1}^n\pi_iG(x;\mu_i,U_iU_i^T+\sigma_i^2I),\ \sum_{i=1}^n\pi_i=1
+$$</code>
+<code>$\pi_i$</code> represents the a priori probability of drawing a point from subspace <code>$S_i$</code>.<br />
+<strong>The ML estimates of the parameters of this mixture model can be found using expectation maximization(EM).</strong><br />
+Pros<br />
+1. It is a simple and intuitive method, where each iteration can be computed in closed form by using PPCA.<br />
+2. Applicable to both linear and affine subspaces and can be extended to accommodate outliers and missing entries in the data points.<br />
+Cons<br />
+1. The number and dimensions of the subspaces need to be known beforehand.<br />
+2. Not optimal when the data inside each subspace or the noise is not Gaussian.<br />
+3. Often converges to a local maximum.</p>
+
+<h4 id="agglomerative-lossy-compression">AGGLOMERATIVE LOSSY COMPRESSION</h4>
+
+<p><strong>Unlike MPPCA, ALC does not aim to obtain an ML estimate of the parameters of the mixture model. Instead, it looks for the segmentation of the data that minimizes the coding length needed to fit the points with a mixture of degenerate Gaussians up to a given distortion.</strong><br />
+Specifically, the number of bits needed to optimally code $N$ independent identically distributed(i.i.d.) samples from a zeromean D-dimensional Gaussian, i.e., $X\in\mathbb{R}^{D\times N}$, up to a distortion $\delta$ can be approximated as <code>$[(N+D)/2]log_2det(I+(D/\delta^2N)XX^T)$</code>. Thus, the total number of bits for coding amixture of Gaussians can be approximated as
+<code>$$
+\sum_{i=1}^n\frac{N_i+D}{2}log_2det(I+\frac{D}{\delta^2N_i}X_iX_i^T)-N_ilog_2(\frac{N_i}{N}),
+$$</code>
+where <code>$X_i\in\mathbb{R}^{D\times N_i}$</code> is the data from subspace $i$, and the last term is the number of bits needed to code (losslessly) the membership of the $N$ samples to the $n$ groups.<br />
+<strong>ALC deals with this issue by using an agglomerative clustering method.</strong> Initially, each data point is considered as a separate group. At each iteration, two groups are merged if doing so results in the greatest decrease of the coding length. The algorithm terminates when the coding length cannot be further decreased.<br />
+Pros<br />
+1. Can naturally handle noise and outliers in the data.<br />
+2. ALC does not need to know the number of subspaces and their dimensions.<br />
+Cons<br />
+1. There is no theoretical proof for the optimality of the agglomerative procedure.</p>
+
+<h4 id="random-sample-consensus">RANDOM SAMPLE CONSENSUS</h4>
+
+<p><strong>Random sample consensus (RANSAC) is a statistical method for fitting amodel to a cloud of points corrupted with outliers in a statistically robust way.</strong><br />
+More specifically, if $d$ is the minimum number of points required to fit a model to the data, RANSAC randomly samples $d$ points from the data, fits a model to these $d$ points, computes the residual of each data point to this model, and chooses the points whose residual is below a threshold as the inliers. The procedure is then repeated for $d$ sample points, until the number of inliers is above a threshold, or enough samples have been drawn. The outputs of the algorithm are the parameters of the model and the labeling of inliers and outliers.</p>
+
+<p>Pros<br />
+1. Ability to handle outliers explicitly.<br />
+2. Does not require the subspaces to be independent, because it computes one subspace at a time.<br />
+3. Does not need to know the number of subspaces beforehand.<br />
+Cons<br />
+1. Performance deteriorates quickly as the number of subspaces n increases.<br />
+2. It requires the dimension of the subspaces to be known and equal.</p>
+
+<h3 id="spectral-clustering-based-methods">·SPECTRAL CLUSTERING-BASED METHODS</h3>
+
+<blockquote>
+<p>This part will be a separate post.</p>
+</blockquote>
 
 <h2 id="references">REFERENCES</h2>
 
