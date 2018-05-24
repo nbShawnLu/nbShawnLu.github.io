@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8" />
+
+  
+  <title>谱聚类了解一下</title>
+
+  
+  
+
+
+
+
+
+  
+  <meta name="author" content="Shawn Lu" />
+  <meta name="description" content="引言 谱聚类是一种利用样本间的相似矩阵的特征值（谱），来对数据降维以更好的进行聚类的方法。相比传统的k-means等聚类方法，谱聚类往往能表现的更好，特别是能够保留局部的连接性，并且非常容易实现。
+谱聚类方法和图方法有很大的关联，综述[1]首先回顾了基本的图记号，之后描述了拉普拉斯矩阵的一些重要性质，最后从图分割、随机游走、摄动理论三个角度来对谱聚类做出解释。
+图的标记和相似图 给定一系列的数据点$\{x_i\},i=1,..,n$，$x_i$和$x_j$的相似性记作$s_{ij}$（非负），一个相似图可以被记作$G=(V,E)$ 。其中，$V$代表数据点的集合，$E$代表边的集合，对于点$x_i$和$x_j$之间的边，相似性$s_{ij}$。
+记无向图的带权邻接矩阵$W=(w_{ij})_{i,j=1,...,n}$，$w_{ij}=0$表示$v_i$和$v_j$不相连，由于是无向图，$w_{ij}=w_{ji}$。
+记$v_i$的度为$d_i=\sum_{j=1}^nw_{ij}$，定义对角矩阵$D_{ii}=d_i$。
+对于$V$的一个子集$A$，定义补集$V\backslash A=\bar{A}$。定义指示向量(indicator vector)$\mathbb{1}_A=(f_1,...,f_n)&#39;\in\mathbb{R}^n$。当$v_i\in A$时$f_i=1$，否则为0。
+定义$A$的size：$|A|$为A的顶点个数。$vol(A)$为$A$中所有点的度之和。
+三种的相似图  The $\epsilon$-neighborhood graph:
+只连接距离小于$\epsilon$的顶点对。
+ $k$-nearest neighbor graphs:
+只连接距离每个顶点最近的k个顶点。由于需要生成的是无向图，所以对于$v_i$在$v_j$邻域而$v_j$不在$v_i$邻域的点对，我们可以选择都保留或者都忽略。
+ The fully connected graph:
+保留所有点对，通常使用高斯函数来表示相似性。
+  Laplacian矩阵及基本性质 The unnormalized graph Laplacian $L=D-W$
+Properties of L:
+1. 对于所有向量$f\in\mathbb{R}^n$，都有$f&#39;Lf=\sum_{i,j=1}^nw_{ij}(f_i-f_j)^2$。
+2. L是个对称的半正定矩阵。
+3. L最小的特征值为0，对应的特征向量为$\mathbb{1}$。
+4. L的特征值非负。
+5. 对于一个无向图$G$，对应的连接权重$W$非负。$L$特征值$0$的度$k$为连通分量$A_1,...,A_k$的个数，特征值0对应的特征向量被指示向量$\mathbb{1}_{A_1},...,\mathbb{1}_{A_k}$张成。
+The normalized graph Laplacians $L_{sym}:=D^{-1/2}LD^{-1/2}=I-D^{-1/2}WD^{-1/2}$
+（概括的说就是$L$的每一行除以$\sqrt{d_i}$,然后每一列除以$\sqrt{d_i}$。）
+$L_{rw}:=D^{-1}L=I-D^{-1}W$
+（概括的说就是$L$的每一行除以$d_i$）
+Properties of $L_{sym}$ and $L_{rw}$
+1. 对于所有向量$f\in\mathbb{R}^n$，都有$f&#39;L_{sym}f=\frac{1}{2}\sum_{i,j=1}^nw_{ij}(\frac{f_i}{\sqrt{d_i}}-\frac{f_j}{\sqrt{d_i}})^2$。
+2. $\lambda$是$L_{rw}$对于特征向量$v$的特征值 IFF $\lambda$是$L_{sym}$对于特征向量$w=D^{1/2}v$的特征值。" />
+
+  
+  
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@gohugoio" />
+    <meta name="twitter:title" content="谱聚类了解一下" />
+    <meta name="twitter:description" content="引言 谱聚类是一种利用样本间的相似矩阵的特征值（谱），来对数据降维以更好的进行聚类的方法。相比传统的k-means等聚类方法，谱聚类往往能表现的更好，特别是能够保留局部的连接性，并且非常容易实现。
+谱聚类方法和图方法有很大的关联，综述[1]首先回顾了基本的图记号，之后描述了拉普拉斯矩阵的一些重要性质，最后从图分割、随机游走、摄动理论三个角度来对谱聚类做出解释。
+图的标记和相似图 给定一系列的数据点$\{x_i\},i=1,..,n$，$x_i$和$x_j$的相似性记作$s_{ij}$（非负），一个相似图可以被记作$G=(V,E)$ 。其中，$V$代表数据点的集合，$E$代表边的集合，对于点$x_i$和$x_j$之间的边，相似性$s_{ij}$。
+记无向图的带权邻接矩阵$W=(w_{ij})_{i,j=1,...,n}$，$w_{ij}=0$表示$v_i$和$v_j$不相连，由于是无向图，$w_{ij}=w_{ji}$。
+记$v_i$的度为$d_i=\sum_{j=1}^nw_{ij}$，定义对角矩阵$D_{ii}=d_i$。
+对于$V$的一个子集$A$，定义补集$V\backslash A=\bar{A}$。定义指示向量(indicator vector)$\mathbb{1}_A=(f_1,...,f_n)&#39;\in\mathbb{R}^n$。当$v_i\in A$时$f_i=1$，否则为0。
+定义$A$的size：$|A|$为A的顶点个数。$vol(A)$为$A$中所有点的度之和。
+三种的相似图  The $\epsilon$-neighborhood graph:
+只连接距离小于$\epsilon$的顶点对。
+ $k$-nearest neighbor graphs:
+只连接距离每个顶点最近的k个顶点。由于需要生成的是无向图，所以对于$v_i$在$v_j$邻域而$v_j$不在$v_i$邻域的点对，我们可以选择都保留或者都忽略。
+ The fully connected graph:
+保留所有点对，通常使用高斯函数来表示相似性。
+  Laplacian矩阵及基本性质 The unnormalized graph Laplacian $L=D-W$
+Properties of L:
+1. 对于所有向量$f\in\mathbb{R}^n$，都有$f&#39;Lf=\sum_{i,j=1}^nw_{ij}(f_i-f_j)^2$。
+2. L是个对称的半正定矩阵。
+3. L最小的特征值为0，对应的特征向量为$\mathbb{1}$。
+4. L的特征值非负。
+5. 对于一个无向图$G$，对应的连接权重$W$非负。$L$特征值$0$的度$k$为连通分量$A_1,...,A_k$的个数，特征值0对应的特征向量被指示向量$\mathbb{1}_{A_1},...,\mathbb{1}_{A_k}$张成。
+The normalized graph Laplacians $L_{sym}:=D^{-1/2}LD^{-1/2}=I-D^{-1/2}WD^{-1/2}$
+（概括的说就是$L$的每一行除以$\sqrt{d_i}$,然后每一列除以$\sqrt{d_i}$。）
+$L_{rw}:=D^{-1}L=I-D^{-1}W$
+（概括的说就是$L$的每一行除以$d_i$）
+Properties of $L_{sym}$ and $L_{rw}$
+1. 对于所有向量$f\in\mathbb{R}^n$，都有$f&#39;L_{sym}f=\frac{1}{2}\sum_{i,j=1}^nw_{ij}(\frac{f_i}{\sqrt{d_i}}-\frac{f_j}{\sqrt{d_i}})^2$。
+2. $\lambda$是$L_{rw}$对于特征向量$v$的特征值 IFF $\lambda$是$L_{sym}$对于特征向量$w=D^{1/2}v$的特征值。" />
+    <meta name="twitter:image" content="https://page.shawnlu.ml/img/avatar.jpg" />
+  
+
+  
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="谱聚类了解一下" />
+  <meta property="og:description" content="引言 谱聚类是一种利用样本间的相似矩阵的特征值（谱），来对数据降维以更好的进行聚类的方法。相比传统的k-means等聚类方法，谱聚类往往能表现的更好，特别是能够保留局部的连接性，并且非常容易实现。
+谱聚类方法和图方法有很大的关联，综述[1]首先回顾了基本的图记号，之后描述了拉普拉斯矩阵的一些重要性质，最后从图分割、随机游走、摄动理论三个角度来对谱聚类做出解释。
+图的标记和相似图 给定一系列的数据点$\{x_i\},i=1,..,n$，$x_i$和$x_j$的相似性记作$s_{ij}$（非负），一个相似图可以被记作$G=(V,E)$ 。其中，$V$代表数据点的集合，$E$代表边的集合，对于点$x_i$和$x_j$之间的边，相似性$s_{ij}$。
+记无向图的带权邻接矩阵$W=(w_{ij})_{i,j=1,...,n}$，$w_{ij}=0$表示$v_i$和$v_j$不相连，由于是无向图，$w_{ij}=w_{ji}$。
+记$v_i$的度为$d_i=\sum_{j=1}^nw_{ij}$，定义对角矩阵$D_{ii}=d_i$。
+对于$V$的一个子集$A$，定义补集$V\backslash A=\bar{A}$。定义指示向量(indicator vector)$\mathbb{1}_A=(f_1,...,f_n)&#39;\in\mathbb{R}^n$。当$v_i\in A$时$f_i=1$，否则为0。
+定义$A$的size：$|A|$为A的顶点个数。$vol(A)$为$A$中所有点的度之和。
+三种的相似图  The $\epsilon$-neighborhood graph:
+只连接距离小于$\epsilon$的顶点对。
+ $k$-nearest neighbor graphs:
+只连接距离每个顶点最近的k个顶点。由于需要生成的是无向图，所以对于$v_i$在$v_j$邻域而$v_j$不在$v_i$邻域的点对，我们可以选择都保留或者都忽略。
+ The fully connected graph:
+保留所有点对，通常使用高斯函数来表示相似性。
+  Laplacian矩阵及基本性质 The unnormalized graph Laplacian $L=D-W$
+Properties of L:
+1. 对于所有向量$f\in\mathbb{R}^n$，都有$f&#39;Lf=\sum_{i,j=1}^nw_{ij}(f_i-f_j)^2$。
+2. L是个对称的半正定矩阵。
+3. L最小的特征值为0，对应的特征向量为$\mathbb{1}$。
+4. L的特征值非负。
+5. 对于一个无向图$G$，对应的连接权重$W$非负。$L$特征值$0$的度$k$为连通分量$A_1,...,A_k$的个数，特征值0对应的特征向量被指示向量$\mathbb{1}_{A_1},...,\mathbb{1}_{A_k}$张成。
+The normalized graph Laplacians $L_{sym}:=D^{-1/2}LD^{-1/2}=I-D^{-1/2}WD^{-1/2}$
+（概括的说就是$L$的每一行除以$\sqrt{d_i}$,然后每一列除以$\sqrt{d_i}$。）
+$L_{rw}:=D^{-1}L=I-D^{-1}W$
+（概括的说就是$L$的每一行除以$d_i$）
+Properties of $L_{sym}$ and $L_{rw}$
+1. 对于所有向量$f\in\mathbb{R}^n$，都有$f&#39;L_{sym}f=\frac{1}{2}\sum_{i,j=1}^nw_{ij}(\frac{f_i}{\sqrt{d_i}}-\frac{f_j}{\sqrt{d_i}})^2$。
+2. $\lambda$是$L_{rw}$对于特征向量$v$的特征值 IFF $\lambda$是$L_{sym}$对于特征向量$w=D^{1/2}v$的特征值。" />
+  <meta property="og:url" content="https://page.shawnlu.ml/post/spectral-clustering/" />
+  <meta property="og:image" content="https://page.shawnlu.ml/img/avatar.jpg" />
+
+
+
+
+<meta name="generator" content="Hugo 0.39" />
+
+
+<link rel="canonical" href="https://page.shawnlu.ml/post/spectral-clustering/" />
+<link rel="alternative" href="https://page.shawnlu.ml/index.xml" title="Shawn Lu&#39;s Page" type="application/atom+xml" />
+
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="format-detection" content="telephone=no,email=no,adress=no" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+
+
+<meta name="robots" content="index,follow" />
+<meta name="referrer" content="origin-when-cross-origin" />
+<meta name="google-site-verification" content="8ysX13exZdcGOXhy3W198ebJ_r-r-fJnO-oOGtgTRMY" />
+
+
+
+
+
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Shawn Lu&#39;s Page" />
+<meta name="msapplication-tooltip" content="Shawn Lu&#39;s Page" />
+<meta name='msapplication-navbutton-color' content="#5fbf5e" />
+<meta name="msapplication-TileColor" content="#5fbf5e" />
+<meta name="msapplication-TileImage" content="/img/tile-image-windows.png" />
+<link rel="icon" href="https://page.shawnlu.ml/img/favicon.ico" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://page.shawnlu.ml/img/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://page.shawnlu.ml/img/favicon-32x32.png" />
+<link rel="icon" sizes="192x192" href="https://page.shawnlu.ml/img/touch-icon-android.png" />
+<link rel="apple-touch-icon" href="https://page.shawnlu.ml/img/touch-icon-apple.png" />
+<link rel="mask-icon" href="https://page.shawnlu.ml/img/safari-pinned-tab.svg" color="#5fbf5e" />
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/video.js/6.2.8/alt/video-js-cdn.min.css" />
+
+<link rel="stylesheet" href="https://page.shawnlu.ml/css/bundle.css" />
+
+
+  
+  <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdn.bootcss.com/video.js/6.2.8/ie8/videojs-ie8.min.js"></script>
+  <![endif]-->
+
+<!--[if lte IE 11]>
+    <script src="//cdn.bootcss.com/classlist/1.1.20170427/classList.min.js"></script>
+  <![endif]-->
+
+
+<script src="//cdn.bootcss.com/object-fit-images/3.2.3/ofi.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/smooth-scroll/12.1.4/js/smooth-scroll.polyfills.min.js"></script>
+
+
+</head>
+  <body>
+    
+    <div class="suspension">
+      <a title="Go to top" class="to-top is-hide"><span class="icon icon-up"></span></a>
+      
+        
+      
+    </div>
+    
+    
+  <header class="site-header">
+  <img class="avatar" src="https://page.shawnlu.ml/img/avatar.jpg" alt="Avatar">
+  
+  <h2 class="title">Shawn Lu&#39;s Page</h2>
+  
+  <p class="subtitle">Machine Learning@SMILE Lab, UESTC</p>
+  <button class="menu-toggle" type="button">
+    <span class="icon icon-menu"></span>
+  </button>
+  <nav class="site-menu collapsed">
+    <h2 class="offscreen">Main Menu</h2>
+    <ul class="menu-list">
+      
+      
+      
+      
+        <li class="menu-item
+            
+            
+            
+              is-active
+            ">
+            <a href="https://page.shawnlu.ml/">Home</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="https://page.shawnlu.ml/tags/">Tags</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="https://page.shawnlu.ml/resume/">Resume</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="https://page.shawnlu.ml/links/">Links</a>
+          </li>
+      
+        <li class="menu-item
+            
+            
+            ">
+            <a href="https://page.shawnlu.ml/about/">About</a>
+          </li>
+      
+    </ul>
+  </nav>
+  <nav class="social-menu collapsed">
+    <h2 class="offscreen">Social Networks</h2>
+    <ul class="social-list">
+
+      
+      <li class="social-item">
+        <a href="mailto:nbstephenlu@gmail.com" title="Email"><span class="icon icon-email"></span></a>
+      </li>
+
+      
+      <li class="social-item">
+        <a href="//github.com/nbShawnLu" title="GitHub"><span class="icon icon-github"></span></a>
+      </li>
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <li class="social-item">
+        <a href="//www.linkedin.com/in/nbshawnlu" title="Linkedin"><span class="icon icon-linkedin"></span></a>
+      </li>
+
+      <li class="social-item">
+        <a href="//www.zhihu.com/people/ShawnLu" title="Zhihu"><span class="icon icon-zhihu"></span></a>
+      </li>
+
+      
+
+      
+
+      <li class="social-item">
+        <a href="https://page.shawnlu.ml/index.xml"><span class="icon icon-rss" title="RSS"></span></a>
+      </li>
+
+    </ul>
+  </nav>
+</header>
+
+  <section class="main post-detail">
+    <header class="post-header">
+      <h1 class="post-title">谱聚类了解一下</h1>
+      <p class="post-meta">@Shawn Lu · May 24, 2018 · 2 min read</p>
+    </header>
+    <article class="post-content">
+
+<h2 id="引言">引言</h2>
+
+<p>谱聚类是一种利用样本间的相似矩阵的特征值（谱），来对数据降维以更好的进行聚类的方法。相比传统的k-means等聚类方法，谱聚类往往能表现的更好，特别是能够保留局部的连接性，并且非常容易实现。<br />
+谱聚类方法和图方法有很大的关联，综述[1]首先回顾了基本的图记号，之后描述了拉普拉斯矩阵的一些重要性质，最后从图分割、随机游走、摄动理论三个角度来对谱聚类做出解释。</p>
+
+<h2 id="图的标记和相似图">图的标记和相似图</h2>
+
+<p>给定一系列的数据点<code>$\{x_i\},i=1,..,n$</code>，<code>$x_i$</code>和<code>$x_j$</code>的相似性记作<code>$s_{ij}$</code>（非负），一个相似图可以被记作$G=(V,E)$ 。其中，$V$代表数据点的集合，$E$代表边的集合，对于点<code>$x_i$</code>和<code>$x_j$</code>之间的边，相似性<code>$s_{ij}$</code>。<br />
+记无向图的带权邻接矩阵<code>$W=(w_{ij})_{i,j=1,...,n}$</code>，<code>$w_{ij}=0$</code>表示<code>$v_i$</code>和<code>$v_j$</code>不相连，由于是无向图，<code>$w_{ij}=w_{ji}$</code>。<br />
+记<code>$v_i$</code>的度为<code>$d_i=\sum_{j=1}^nw_{ij}$</code>，定义对角矩阵<code>$D_{ii}=d_i$</code>。<br />
+对于$V$的一个子集$A$，定义补集<code>$V\backslash A=\bar{A}$</code>。定义指示向量(indicator vector)<code>$\mathbb{1}_A=(f_1,...,f_n)'\in\mathbb{R}^n$</code>。当<code>$v_i\in A$</code>时<code>$f_i=1$</code>，否则为0。<br />
+定义$A$的size：$|A|$为A的顶点个数。$vol(A)$为$A$中所有点的度之和。</p>
+
+<h3 id="三种的相似图">三种的相似图</h3>
+
+<ol>
+<li>The $\epsilon$-neighborhood graph:<br />
+只连接距离小于$\epsilon$的顶点对。<br /></li>
+<li>$k$-nearest neighbor graphs:<br />
+只连接距离每个顶点最近的k个顶点。由于需要生成的是无向图，所以对于<code>$v_i$</code>在<code>$v_j$</code>邻域而<code>$v_j$</code>不在<code>$v_i$</code>邻域的点对，我们可以选择都保留或者都忽略。<br /></li>
+<li>The fully connected graph:<br />
+保留所有点对，通常使用高斯函数来表示相似性。<br /></li>
+</ol>
+
+<h2 id="laplacian矩阵及基本性质">Laplacian矩阵及基本性质</h2>
+
+<h3 id="the-unnormalized-graph-laplacian">The unnormalized graph Laplacian</h3>
+
+<p><code>$L=D-W$</code><br />
+<strong>Properties of L:</strong><br />
+1. 对于所有向量$f\in\mathbb{R}^n$，都有<code>$f'Lf=\sum_{i,j=1}^nw_{ij}(f_i-f_j)^2$</code>。<br />
+2. L是个对称的半正定矩阵。<br />
+3. L最小的特征值为0，对应的特征向量为$\mathbb{1}$。<br />
+4. L的特征值非负。<br />
+5. 对于一个无向图$G$，对应的连接权重$W$非负。$L$特征值$0$的度$k$为连通分量<code>$A_1,...,A_k$</code>的个数，特征值0对应的特征向量被指示向量<code>$\mathbb{1}_{A_1},...,\mathbb{1}_{A_k}$</code>张成。</p>
+
+<h3 id="the-normalized-graph-laplacians">The normalized graph Laplacians</h3>
+
+<p><code>$L_{sym}:=D^{-1/2}LD^{-1/2}=I-D^{-1/2}WD^{-1/2}$</code><br />
+（概括的说就是$L$的每一行除以<code>$\sqrt{d_i}$</code>,然后每一列除以<code>$\sqrt{d_i}$</code>。）<br />
+<code>$L_{rw}:=D^{-1}L=I-D^{-1}W$</code><br />
+（概括的说就是$L$的每一行除以<code>$d_i$</code>）<br />
+<strong>Properties of <code>$L_{sym}$</code> and <code>$L_{rw}$</code></strong><br />
+1. 对于所有向量$f\in\mathbb{R}^n$，都有<code>$f'L_{sym}f=\frac{1}{2}\sum_{i,j=1}^nw_{ij}(\frac{f_i}{\sqrt{d_i}}-\frac{f_j}{\sqrt{d_i}})^2$</code>。<br />
+2. $\lambda$是<code>$L_{rw}$</code>对于特征向量$v$的特征值  IFF $\lambda$是<code>$L_{sym}$</code>对于特征向量<code>$w=D^{1/2}v$</code>的特征值。<br />
+3. $\lambda$是<code>$L_{rw}$</code>对于特征向量$v$的特征值  IFF $Lv=\lambda Dv$<br />
+4. $0$是<code>$L_{rw}$</code>对于特征向量$\mathbb{1}$的特征值。$0$是<code>$L_{sym}$</code>对于特征向量<code>$D^{1/2}\mathbb{1}$</code>的特征值。<br />
+5. <code>$L_{rw}$</code>和<code>$L_{sym}$</code>都是半正定矩阵，特征值非负。<br />
+6. 对于一个无向图$G$，对应的连接权重$W$非负。<code>$L_{rw}$</code>和<code>$L_{sym}$</code>特征值$0$的度$k$为连通分量<code>$A_1,...,A_k$</code>的个数，<code>$L_{rw}$</code>特征值0对应的特征向量被指示向量<code>$\mathbb{1}_{A_1},...,\mathbb{1}_{A_k}$</code>张成。<code>$L_{sym}$</code>特征值0对应的特征向量被<code>$D^{1/2}\mathbb{1}_{A_1},...,D^{1/2}\mathbb{1}_{A_k}$</code>张成。</p>
+
+<h2 id="谱聚类算法">谱聚类算法</h2>
+
+<h3 id="unnormalized-spectral-clustering">Unnormalized spectral clustering</h3>
+
+<p>输入：相似矩阵$S\in\mathbb{R}^{n\times n}$，构建的聚类个数$k$</p>
+
+<ul>
+<li>用之前提到的方法构建相似图<br /></li>
+<li>计算Laplacian矩阵$L$<br /></li>
+<li>计算最小的k个特征值对应的特征向量<br /></li>
+<li>将特征向量按列拼接成$V\in\mathbb{R}^{n\times k}$<br /></li>
+<li>令<code>$y_i$</code>等于$V$的第$i$行<br /></li>
+<li>对<code>$y_i$</code>进行$k$-means聚类<br /></li>
+</ul>
+
+<p>输出：团<code>$A_1,...A_k$</code>，其中<code>$A_i=\{j|y_j\in C_i\}$</code></p>
+
+<h3 id="normalized-spectral-clustering-according-to-shi-and-malik-2000">Normalized spectral clustering according to Shi and Malik (2000)</h3>
+
+<p>输入：相似矩阵$S\in\mathbb{R}^{n\times n}$，构建的聚类个数$k$</p>
+
+<ul>
+<li>用之前提到的方法构建相似图<br /></li>
+<li>计算Laplacian矩阵$L$<br /></li>
+<li><strong>计算<code>$L_{rw}$</code>最小的k个特征值对应的特征向量(通过广义特征问题$Lv=\lambda Dv$求解)</strong><br /></li>
+<li>将特征向量按列拼接成$V\in\mathbb{R}^{n\times k}$<br /></li>
+<li>令<code>$y_i$</code>等于$V$的第$i$行<br /></li>
+<li>对<code>$y_i$</code>进行$k$-means聚类<br /></li>
+</ul>
+
+<p>输出：团<code>$A_1,...A_k$</code>，其中<code>$A_i=\{j|y_j\in C_i\}$</code></p>
+
+<h3 id="normalized-spectral-clustering-according-to-ng-jordan-and-weiss-2002">Normalized spectral clustering according to Ng, Jordan, and Weiss (2002)</h3>
+
+<p>输入：相似矩阵$S\in\mathbb{R}^{n\times n}$，构建的聚类个数$k$</p>
+
+<ul>
+<li>用之前提到的方法构建相似图<br /></li>
+<li>计算normalized Laplacian矩阵<strong><code>$L_{sym}$</code></strong><br /></li>
+<li><strong>计算<code>$L_{sym}$</code>最小的k个特征值对应的特征向量</strong><br /></li>
+<li>将特征向量按列拼接成$V\in\mathbb{R}^{n\times k}$<br /></li>
+<li><strong>将V按行正则化，构建$U$，<code>$U_{ij}=V_{ij}/(\sum_kV_{ik}^2)^{1/2}$</code></strong><br /></li>
+<li>令<code>$y_i$</code>等于$U$的第$i$行<br /></li>
+<li>对<code>$y_i$</code>进行$k$-means聚类<br /></li>
+</ul>
+
+<p>输出：团<code>$A_1,...A_k$</code>，其中<code>$A_i=\{j|y_j\in C_i\}$</code></p>
+
+<h2 id="graph-cut-point-of-view">Graph cut point of view</h2>
+
+<p>直觉上，我们希望找到一种分割，使得两部分之间的权重越小，两部分内的权重越大。<br />
+对于$V$的互斥子集$A,B$，定义<code>$cut(A,B)=\sum_{i\in A,j\in B}w_{ij}$</code>。<br />
+给定一个相似图，将$k$；类数据分割开最直接的方式是最小化<code>$cut(A_1,...,A_k):=\sum_{i=1}^kcut(A_i,\bar{A_i})$</code>。<br />
+但实际上，这种方法往往会只分割成一个点和剩余部分，所以需要进行一定的正则化，两种常见的优化函数为：<br />
+<code>$RatioCut(A_1,...,A_k)=\sum_{i=1}^k\frac{cut(A_i,\bar{A_i})}{|A_i|}$</code><br />
+<code>$Ncut(A_1,...,A_k)=\sum_{i=1}^k\frac{cut(A_i,\bar{A_i})}{vol(A_i)}$</code></p>
+
+<h4 id="ratiocut解决2分类问题">RatioCut解决2分类问题</h4>
+
+<p>定义向量$f\in\mathbb{R}^n$
+<code>$$f_i=
+\begin{cases}
+\sqrt{|\bar A|/|A|},  &amp;if\ v_i \in A \\
+-\sqrt{|\bar A|/|A|},  &amp;if\ v_i \in \bar A
+\end{cases}$$</code></p>
+
+<p>可以求得</p>
+
+<ol>
+<li><code>$f'Lf=2|V|RatioCut(A,\bar A)$</code><br /></li>
+<li>$f\cdot\mathbb{1}=0$<br /></li>
+<li>$\Vert{f}\Vert^2=n$<br /></li>
+</ol>
+
+<p>将<code>$f_i$</code>的取值条件松弛(不再只能取特定两个值)，可以通过以下优化问题求解<code>$f_i$</code>
+<code>$$min_{f\in\mathbb{R}^n}f'Lf\quad s.t.\quad f\bot\mathbb{1}, \Vert{f}\Vert=\sqrt{n}$$</code></p>
+
+<p>最简单的标记<code>$v_i$</code>类别的方法为若<code>$f_i&gt;0$</code>则将<code>$v_i$</code>标记为$A$类，否则标记为<code>$\bar A$</code><br />
+更好的方式可以将<code>$f_i$</code>进行一次$k$-means聚类，然后再根据<code>$f_i$</code>的类别标记<code>$v_i$</code></p>
+
+<h4 id="ratiocut解决-k-分类问题">RatioCut解决$k$分类问题</h4>
+
+<p>定义$k$个指示向量<code>$h_i=(h_{1,i},...,h_{n,i})'$</code><br />
+<code>$$h_{i,j}=
+\begin{cases}
+1/\sqrt{|A_i|},  &amp;if\ i \in A_j \\
+0,  &amp;otherwise
+\end{cases}$$</code></p>
+
+<p>可以得到 <code>$h_i'Lh_i=2\frac{cut(A_i,\bar{A_i})}{|A_i|}$</code><br />
+令$H$为<code>$h_i$</code>按列拼接成的矩阵，则有</p>
+
+<ol>
+<li><code>$h_i'Lh_i=(H'LH)_{ii}$</code><br /></li>
+<li>$H&rsquo;H=I$<br /></li>
+</ol>
+
+<p>所以，
+<code>$$RatioCut(A_1,...,A_k)=\frac{1}{2}\sum_{i=1}^kh_i'Lh=\frac{1}{2}\sum_{i=1}^k(H'LH)_{ii}=\frac{1}{2}Tr(H'LH)$$</code></p>
+
+<p>同样的将$H$的取值范围松弛成任意实数，可以通过以下优化问题求解$H$<br />
+<code>$$min_{H\in\mathbb{R}^{n\times k}}\ Tr(H'LH)\quad s.t.\quad H'H=I$$</code></p>
+
+<p>实际上，$H$的解其实就可以理解成$L$的前$k$个特征向量。</p>
+
+<h4 id="ncut解决2分类问题">Ncut解决2分类问题</h4>
+
+<p>定义向量$f\in\mathbb{R}^n$<br />
+<code>$$f_i=
+\begin{cases}
+\sqrt{\frac{vol(\bar A)}{vol(A)}},  &amp;if\ i \in A \\
+-\sqrt{\frac{vol(A)}{vol(\bar A)}},  &amp;if\ i \in \bar A
+\end{cases}$$</code></p>
+
+<p>可以得到</p>
+
+<ol>
+<li>$(Df)&rsquo;\cdot\mathbb{1}=0$<br /></li>
+<li>$f&rsquo;Df=val(V)$<br /></li>
+<li>$f&rsquo;Lf=2vol(V)Ncut(A,\bar A)$<br /></li>
+</ol>
+
+<p>同样的，可以通过以下优化问题求解$f$<br />
+<code>$$min_{f\in\mathbb{R}^n}f'Lf\quad s.t.\quad Df\bot\mathbb{1}, f'Df=vol(V)$$</code></p>
+
+<h4 id="ncut解决-k-分类问题">Ncut解决$k$分类问题</h4>
+
+<p>定义$k$个指示向量<code>$h_i=(h_{1,i},...,h_{n,i})'$</code><br />
+<code>$$h_{i,j}=
+\begin{cases}
+1/\sqrt{vol(A_i)},  &amp;if\ i \in A_j \\
+0,  &amp;otherwise
+\end{cases}$$</code></p>
+
+<p>可以得到 <code>$h_i'Lh_i=2\frac{cut(A_i,\bar{A_i})}{vol(A_i)}$</code><br />
+令$H$为<code>$h_i$</code>按列拼接成的矩阵，则有</p>
+
+<ol>
+<li><code>$h_i'Lh_i=(H'LH)_{ii}$</code><br /></li>
+<li>$H&rsquo;DH=I$<br /></li>
+</ol>
+
+<p>所以，
+<code>$$Ncut(A_1,...,A_k)=\frac{1}{2}\sum_{i=1}^kh_i'Lh=\frac{1}{2}\sum_{i=1}^k(H'LH)_{ii}=\frac{1}{2}Tr(H'LH)$$</code></p>
+
+<p>将$H$替换成<code>$U=D^{1/2}H$</code>，同样$U$的取值范围松弛成任意实数，可以通过以下优化问题求解$U$<br />
+<code>$$min_{U\in\mathbb{R}^{n\times k}}\ Tr(U'D^{-1/2}LD^{-1/2}U)\quad s.t.\quad U'U=I$$</code></p>
+
+<p>实际上，$U$的解其实就可以理解成$L_{sym}$的前$k$个特征向量。</p>
+
+<h2 id="random-walks-point-of-view">Random walks point of view</h2>
+
+<p>随机游走也是一种解释谱聚类原理的一种方法。把相似矩阵看作是游走的转移概率，我们可以寻找一系列平稳分布，而这些分布被各个连通分量的平稳分布所张成。对于连通图，我们希望得到一种分割，使得在两类之间转移的概率最小。其实可以证明这个观点得到的结果与Ncut一致。<br />
+定义转移矩阵$P$，<code>$p_{ij}:=w_{ij}/d_i$</code>，所以<code>$P=D^{-1}W$</code><br />
+定义随机游走的平稳分布<code>$\pi=(\pi_1,...,\pi_n)'$</code>，可以证明对于存在平稳分布的转移矩阵，<code>$\pi_i=d_i/vol(G)$</code><br />
+我们希望最小化从$A$转移到$\bar A$以及$\bar A$转移到$A$的概率，首先，对于联合分布
+<code>$$P(X_0\in A,X_1\in B)=\sum_{i\in A,j\in B}P(X_0=i,X_1=j)=\sum_{i\in A,j\in B}\pi_ip_{ij}=\sum_{i\in A,j\in B}\frac{d_i}{vol(G)}\frac{w_{ij}}{d_i}=\frac{1}{vol(G)}\sum_{i\in A,j\in B}w_{ij}$$</code></p>
+
+<p>可以得到条件概率
+<code>$$P(X_1\in B|X_0\in A)=\frac{P(X_0\in A,X_1\in B)}{P(X_0\in A)}=(\frac{1}{vol(G)}\sum_{i\in A,j\in B}w_{ij})(\frac{vol(G)}{vol(A)})=\frac{\sum_{i\in A,j\in B}w_{ij}}{vol(A)}$$</code></p>
+
+<p>可以观察到这个形式与Ncut一致。</p>
+
+<h2 id="references">References</h2>
+
+<p>Von Luxburg, Ulrike. &ldquo;A tutorial on spectral clustering.&rdquo; Statistics and computing 17.4 (2007): 395-416.</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Spectral_clustering">Spectral clustering - Wikipedia</a></p>
+</article>
+    <footer class="post-footer">
+      
+      <ul class="post-tags">
+        
+          <li><a href="https://page.shawnlu.ml/tags/spectral-clustering"><span class="tag">Spectral Clustering</span></a></li>
+        
+          <li><a href="https://page.shawnlu.ml/tags/machine-learning"><span class="tag">Machine Learning</span></a></li>
+        
+      </ul>
+      
+      <p class="post-copyright">
+        © This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you likes to quote or reproduce.
+      </p>
+    </footer>
+    
+      
+    
+  </section>
+  <footer class="site-footer">
+  <p>© 2017-2018 Shawn Lu&#39;s Page</p>
+  <p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with theme <a href="https://github.com/laozhu/hugo-nuo" target="_blank">Nuo</a>.</p>
+  
+</footer>
+
+
+
+<script async src="//cdn.bootcss.com/video.js/6.2.8/alt/video.novtt.min.js"></script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      displayMath: [['$$','$$'], ['\\[','\\]']],
+      processEscapes: true,
+      processEnvironments: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      TeX: { equationNumbers: { autoNumber: "AMS" },
+      extensions: ["AMSmath.js", "AMSsymbols.js"] }
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+  // Fix <code> tags after MathJax finishes running. This is a
+  // hack to overcome a shortcoming of Markdown. Discussion at
+  // https://github.com/mojombo/jekyll/issues/199
+  MathJax.Hub.Queue(() => {
+    MathJax.Hub.getAllJax().map(v => v.SourceElement().parentNode.className += ' has-jax');
+  });
+</script>
+
+<script src="https://page.shawnlu.ml/js/bundle.js"></script>
+
+
+
+
+  </body>
+</html>

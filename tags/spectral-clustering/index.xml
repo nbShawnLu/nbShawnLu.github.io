@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Machine Learning on Shawn Lu&#39;s Page</title>
-    <link>https://page.shawnlu.ml/tags/machine-learning/</link>
-    <description>Recent content in Machine Learning on Shawn Lu&#39;s Page</description>
+    <title>Spectral Clustering on Shawn Lu&#39;s Page</title>
+    <link>https://page.shawnlu.ml/tags/spectral-clustering/</link>
+    <description>Recent content in Spectral Clustering on Shawn Lu&#39;s Page</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you likes to quote or reproduce.</copyright>
     <lastBuildDate>Thu, 24 May 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://page.shawnlu.ml/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://page.shawnlu.ml/tags/spectral-clustering/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -45,21 +45,6 @@ $L_{rw}:=D^{-1}L=I-D^{-1}W$
 Properties of $L_{sym}$ and $L_{rw}$
 1. 对于所有向量$f\in\mathbb{R}^n$，都有$f&#39;L_{sym}f=\frac{1}{2}\sum_{i,j=1}^nw_{ij}(\frac{f_i}{\sqrt{d_i}}-\frac{f_j}{\sqrt{d_i}})^2$。
 2. $\lambda$是$L_{rw}$对于特征向量$v$的特征值 IFF $\lambda$是$L_{sym}$对于特征向量$w=D^{1/2}v$的特征值。</description>
-    </item>
-    
-    <item>
-      <title>Introduction to Subspace Clustering</title>
-      <link>https://page.shawnlu.ml/post/subspace-clustering/</link>
-      <pubDate>Fri, 11 May 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://page.shawnlu.ml/post/subspace-clustering/</guid>
-      <description>THE SUBSPACE CLUSTERING PROBLEM Modeling a collection of data points with a union of subspaces.
-Specifically,
-Given set of points $\{x_j\in\mathbb{R}^D\}_{j=1}^N$
-Drawn from an unknown union of linear or affine subspaces $\{S_i\}_{i=1}^n$ of unknown dimendions $d_i=dim(S_i)$
-The subspaces can be described as $S_i=\{x\in\mathbb R^D:x=\mu_i+U_iy\}$, i=1,...,n
-$y\in\mathbb R^{d_i}$ is a low-dimensional representation for point $x$
-The goal of subspace clustering is to find the number of subspaces $n$, their dimensions $\{d_i\}_{i=1}^n$, the subspace bases $\{U_i\}_{i=1}^n$, the points $\{\mu_i\}_{i=1}^n$, and the segmentation of the points according to the subspaces.</description>
     </item>
     
   </channel>

@@ -7,10 +7,45 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you likes to quote or reproduce.</copyright>
-    <lastBuildDate>Fri, 11 May 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 24 May 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://page.shawnlu.ml/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>谱聚类了解一下</title>
+      <link>https://page.shawnlu.ml/post/spectral-clustering/</link>
+      <pubDate>Thu, 24 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://page.shawnlu.ml/post/spectral-clustering/</guid>
+      <description>引言 谱聚类是一种利用样本间的相似矩阵的特征值（谱），来对数据降维以更好的进行聚类的方法。相比传统的k-means等聚类方法，谱聚类往往能表现的更好，特别是能够保留局部的连接性，并且非常容易实现。
+谱聚类方法和图方法有很大的关联，综述[1]首先回顾了基本的图记号，之后描述了拉普拉斯矩阵的一些重要性质，最后从图分割、随机游走、摄动理论三个角度来对谱聚类做出解释。
+图的标记和相似图 给定一系列的数据点$\{x_i\},i=1,..,n$，$x_i$和$x_j$的相似性记作$s_{ij}$（非负），一个相似图可以被记作$G=(V,E)$ 。其中，$V$代表数据点的集合，$E$代表边的集合，对于点$x_i$和$x_j$之间的边，相似性$s_{ij}$。
+记无向图的带权邻接矩阵$W=(w_{ij})_{i,j=1,...,n}$，$w_{ij}=0$表示$v_i$和$v_j$不相连，由于是无向图，$w_{ij}=w_{ji}$。
+记$v_i$的度为$d_i=\sum_{j=1}^nw_{ij}$，定义对角矩阵$D_{ii}=d_i$。
+对于$V$的一个子集$A$，定义补集$V\backslash A=\bar{A}$。定义指示向量(indicator vector)$\mathbb{1}_A=(f_1,...,f_n)&#39;\in\mathbb{R}^n$。当$v_i\in A$时$f_i=1$，否则为0。
+定义$A$的size：$|A|$为A的顶点个数。$vol(A)$为$A$中所有点的度之和。
+三种的相似图  The $\epsilon$-neighborhood graph:
+只连接距离小于$\epsilon$的顶点对。
+ $k$-nearest neighbor graphs:
+只连接距离每个顶点最近的k个顶点。由于需要生成的是无向图，所以对于$v_i$在$v_j$邻域而$v_j$不在$v_i$邻域的点对，我们可以选择都保留或者都忽略。
+ The fully connected graph:
+保留所有点对，通常使用高斯函数来表示相似性。
+  Laplacian矩阵及基本性质 The unnormalized graph Laplacian $L=D-W$
+Properties of L:
+1. 对于所有向量$f\in\mathbb{R}^n$，都有$f&#39;Lf=\sum_{i,j=1}^nw_{ij}(f_i-f_j)^2$。
+2. L是个对称的半正定矩阵。
+3. L最小的特征值为0，对应的特征向量为$\mathbb{1}$。
+4. L的特征值非负。
+5. 对于一个无向图$G$，对应的连接权重$W$非负。$L$特征值$0$的度$k$为连通分量$A_1,...,A_k$的个数，特征值0对应的特征向量被指示向量$\mathbb{1}_{A_1},...,\mathbb{1}_{A_k}$张成。
+The normalized graph Laplacians $L_{sym}:=D^{-1/2}LD^{-1/2}=I-D^{-1/2}WD^{-1/2}$
+（概括的说就是$L$的每一行除以$\sqrt{d_i}$,然后每一列除以$\sqrt{d_i}$。）
+$L_{rw}:=D^{-1}L=I-D^{-1}W$
+（概括的说就是$L$的每一行除以$d_i$）
+Properties of $L_{sym}$ and $L_{rw}$
+1. 对于所有向量$f\in\mathbb{R}^n$，都有$f&#39;L_{sym}f=\frac{1}{2}\sum_{i,j=1}^nw_{ij}(\frac{f_i}{\sqrt{d_i}}-\frac{f_j}{\sqrt{d_i}})^2$。
+2. $\lambda$是$L_{rw}$对于特征向量$v$的特征值 IFF $\lambda$是$L_{sym}$对于特征向量$w=D^{1/2}v$的特征值。</description>
+    </item>
     
     <item>
       <title>Introduction to Subspace Clustering</title>
