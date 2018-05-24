@@ -5,9 +5,7 @@
   <meta charset="utf-8" />
 
   
-  <title>
-  Tags | Shawn Lu&#39;s Page
-</title>
+  <title>PyCharm远程调用matplotlib绘制</title>
 
   
   
@@ -18,20 +16,37 @@
 
   
   <meta name="author" content="Shawn Lu" />
-  <meta name="description" content="Machine Learning@SMILE Lab, UESTC" />
+  <meta name="description" content="背景 在机器学习开发中，我们往往使用GPU服务器来运行代码，PyCharm是一个很方便的远程开发和调试的IDE。开发过程中，我们往往需要调用matplotlib来绘制图形，而直接调用会报&amp;rdquo;no display name and no $DISPLAY environment variable&amp;rdquo;的错误。
+解决方案 所需软件  SSH客户端，例如Putty或Xshell
+ X11 display server，例如Xming
+  所需配置  SSH客户端开启X11转发功能，例如Putty配置如下： 连接后输入echo $DISPLAY，记录输出，如localhost:10.0。 Xming安装完成即可，无需配置。
+ PyCharm在run-&amp;gt;edit configurations-&amp;gt;在environment variables中添加DISPLAY = localhost:10.0。  Reference PyCharm远程开发配置-Yinzm&amp;rsquo;s blog
+Python plotting on remote server using PyCharm -stackoverflow" />
 
   
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:site" content="@gohugoio" />
-  <meta name="twitter:title" content="Shawn Lu&#39;s Page" />
-  <meta name="twitter:description" content="Machine Learning@SMILE Lab, UESTC" />
-  <meta name="twitter:image" content="https://page.shawnlu.ml/img/avatar.jpg" />
+  
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@gohugoio" />
+    <meta name="twitter:title" content="PyCharm远程调用matplotlib绘制" />
+    <meta name="twitter:description" content="背景 在机器学习开发中，我们往往使用GPU服务器来运行代码，PyCharm是一个很方便的远程开发和调试的IDE。开发过程中，我们往往需要调用matplotlib来绘制图形，而直接调用会报&amp;rdquo;no display name and no $DISPLAY environment variable&amp;rdquo;的错误。
+解决方案 所需软件  SSH客户端，例如Putty或Xshell
+ X11 display server，例如Xming
+  所需配置  SSH客户端开启X11转发功能，例如Putty配置如下： 连接后输入echo $DISPLAY，记录输出，如localhost:10.0。 Xming安装完成即可，无需配置。
+ PyCharm在run-&amp;gt;edit configurations-&amp;gt;在environment variables中添加DISPLAY = localhost:10.0。  Reference PyCharm远程开发配置-Yinzm&amp;rsquo;s blog
+Python plotting on remote server using PyCharm -stackoverflow" />
+    <meta name="twitter:image" content="https://page.shawnlu.ml/img/avatar.jpg" />
+  
 
   
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Shawn Lu&#39;s Page" />
-  <meta property="og:description" content="Machine Learning@SMILE Lab, UESTC" />
-  <meta property="og:url" content="https://page.shawnlu.ml/tags/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="PyCharm远程调用matplotlib绘制" />
+  <meta property="og:description" content="背景 在机器学习开发中，我们往往使用GPU服务器来运行代码，PyCharm是一个很方便的远程开发和调试的IDE。开发过程中，我们往往需要调用matplotlib来绘制图形，而直接调用会报&amp;rdquo;no display name and no $DISPLAY environment variable&amp;rdquo;的错误。
+解决方案 所需软件  SSH客户端，例如Putty或Xshell
+ X11 display server，例如Xming
+  所需配置  SSH客户端开启X11转发功能，例如Putty配置如下： 连接后输入echo $DISPLAY，记录输出，如localhost:10.0。 Xming安装完成即可，无需配置。
+ PyCharm在run-&amp;gt;edit configurations-&amp;gt;在environment variables中添加DISPLAY = localhost:10.0。  Reference PyCharm远程开发配置-Yinzm&amp;rsquo;s blog
+Python plotting on remote server using PyCharm -stackoverflow" />
+  <meta property="og:url" content="https://page.shawnlu.ml/post/pycharm-matplotlib/" />
   <meta property="og:image" content="https://page.shawnlu.ml/img/avatar.jpg" />
 
 
@@ -40,7 +55,7 @@
 <meta name="generator" content="Hugo 0.39" />
 
 
-<link rel="canonical" href="https://page.shawnlu.ml/tags/" />
+<link rel="canonical" href="https://page.shawnlu.ml/post/pycharm-matplotlib/" />
 <link rel="alternative" href="https://page.shawnlu.ml/index.xml" title="Shawn Lu&#39;s Page" type="application/atom+xml" />
 
 
@@ -104,6 +119,8 @@
     <div class="suspension">
       <a title="Go to top" class="to-top is-hide"><span class="icon icon-up"></span></a>
       
+        
+      
     </div>
     
     
@@ -126,13 +143,13 @@
         <li class="menu-item
             
             
+            
+              is-active
             ">
             <a href="https://page.shawnlu.ml/">Home</a>
           </li>
       
         <li class="menu-item
-            
-              is-active
             
             
             ">
@@ -226,50 +243,59 @@
   </nav>
 </header>
 
-  <section class="main post-detail terms-list">
+  <section class="main post-detail">
     <header class="post-header">
-      <h1 class="post-title">Tags</h1>
+      <h1 class="post-title">PyCharm远程调用matplotlib绘制</h1>
+      <p class="post-meta">@Shawn Lu · May 24, 2018 · 1 min read</p>
     </header>
-    <div class="tags-cloud">
+    <article class="post-content">
+
+<h2 id="背景">背景</h2>
+
+<p>在机器学习开发中，我们往往使用GPU服务器来运行代码，PyCharm是一个很方便的远程开发和调试的IDE。开发过程中，我们往往需要调用matplotlib来绘制图形，而直接调用会报&rdquo;no display name and no $DISPLAY environment variable&rdquo;的错误。</p>
+
+<h2 id="解决方案">解决方案</h2>
+
+<h3 id="所需软件">所需软件</h3>
+
+<ol>
+<li>SSH客户端，例如<a href="https://www.putty.org/">Putty</a>或<a href="https://www.netsarang.com/products/xsh_overview.html">Xshell</a><br /></li>
+<li>X11 display server，例如<a href="https://sourceforge.net/projects/xming/">Xming</a><br /></li>
+</ol>
+
+<h3 id="所需配置">所需配置</h3>
+
+<ol>
+<li>SSH客户端开启X11转发功能，例如Putty配置如下：
+<img src="https://page.shawnlu.ml/media/posts/putty-x11.png" alt="" /><br />
+连接后输入echo $DISPLAY，记录输出，如localhost:10.0。</li>
+<li>Xming安装完成即可，无需配置。<br /></li>
+<li>PyCharm在run-&gt;edit configurations-&gt;在environment variables中添加DISPLAY = localhost:10.0。</li>
+</ol>
+
+<h3 id="reference">Reference</h3>
+
+<p><a href="https://www.cnblogs.com/yinzm/p/8251118.html">PyCharm远程开发配置-Yinzm&rsquo;s blog</a><br />
+<a href="https://stackoverflow.com/questions/39803373/python-plotting-on-remote-server-using-pycharm?newreg=e4a345202f334e50b4d17be5684ad7a8">Python plotting on remote server using PyCharm
+-stackoverflow</a></p>
+</article>
+    <footer class="post-footer">
       
-      
+      <ul class="post-tags">
         
-        <a href="https://page.shawnlu.ml/tags/machine-learning/" class="tag-m">machine-learning</a>
-      
+          <li><a href="https://page.shawnlu.ml/tags/pycharm"><span class="tag">PyCharm</span></a></li>
         
-        <a href="https://page.shawnlu.ml/tags/page/" class="tag-m">page</a>
-      
+          <li><a href="https://page.shawnlu.ml/tags/matplotlib"><span class="tag">Matplotlib</span></a></li>
         
-        <a href="https://page.shawnlu.ml/tags/computer-graphics/" class="tag-s">computer-graphics</a>
+      </ul>
       
-        
-        <a href="https://page.shawnlu.ml/tags/cuda/" class="tag-s">cuda</a>
+      <p class="post-copyright">
+        © This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you likes to quote or reproduce.
+      </p>
+    </footer>
+    
       
-        
-        <a href="https://page.shawnlu.ml/tags/hello/" class="tag-s">hello</a>
-      
-        
-        <a href="https://page.shawnlu.ml/tags/https/" class="tag-s">https</a>
-      
-        
-        <a href="https://page.shawnlu.ml/tags/matplotlib/" class="tag-s">matplotlib</a>
-      
-        
-        <a href="https://page.shawnlu.ml/tags/pycharm/" class="tag-s">pycharm</a>
-      
-        
-        <a href="https://page.shawnlu.ml/tags/smallpt/" class="tag-s">smallpt</a>
-      
-        
-        <a href="https://page.shawnlu.ml/tags/spectral-clustering/" class="tag-s">spectral-clustering</a>
-      
-        
-        <a href="https://page.shawnlu.ml/tags/ssl/" class="tag-s">ssl</a>
-      
-        
-        <a href="https://page.shawnlu.ml/tags/subspace-clustering/" class="tag-s">subspace-clustering</a>
-      
-    </div>
+    
   </section>
   <footer class="site-footer">
   <p>© 2017-2018 Shawn Lu&#39;s Page</p>

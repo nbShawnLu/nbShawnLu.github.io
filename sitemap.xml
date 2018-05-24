@@ -18,6 +18,11 @@
   </url>
   
   <url>
+    <loc>https://page.shawnlu.ml/post/pycharm-matplotlib/</loc>
+    <lastmod>2018-05-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://page.shawnlu.ml/post/spectral-clustering/</loc>
     <lastmod>2018-05-24T00:00:00+00:00</lastmod>
   </url>
@@ -78,6 +83,12 @@
   </url>
   
   <url>
+    <loc>https://page.shawnlu.ml/tags/matplotlib/</loc>
+    <lastmod>2018-05-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://page.shawnlu.ml/tags/page/</loc>
     <lastmod>2018-05-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -85,6 +96,12 @@
   
   <url>
     <loc>https://page.shawnlu.ml/post/</loc>
+    <lastmod>2018-05-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://page.shawnlu.ml/tags/pycharm/</loc>
     <lastmod>2018-05-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

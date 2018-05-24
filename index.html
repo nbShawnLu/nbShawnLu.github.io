@@ -270,6 +270,24 @@ Properties of $L_{sym}$ and $L_{rw}$
       
         <article class="post-entry">
   <header class="post-header">
+    <h3 class="post-title"><a href="https://page.shawnlu.ml/post/pycharm-matplotlib/" class="post-link">PyCharm远程调用matplotlib绘制</a></h3>
+    <p class="post-meta">@Shawn Lu · May 24, 2018 · 1 min read</p>
+  </header>
+  
+  <p class="post-summary">背景 在机器学习开发中，我们往往使用GPU服务器来运行代码，PyCharm是一个很方便的远程开发和调试的IDE。开发过程中，我们往往需要调用matplotlib来绘制图形，而直接调用会报”no display name and no $DISPLAY environment variable”的错误。
+解决方案 所需软件  SSH客户端，例如Putty或Xshell
+ X11 display server，例如Xming
+  所需配置  SSH客户端开启X11转发功能，例如Putty配置如下： 连接后输入echo $DISPLAY，记录输出，如localhost:10.0。 Xming安装完成即可，无需配置。
+ PyCharm在run-&gt;edit configurations-&gt;在environment variables中添加DISPLAY = localhost:10.0。  Reference PyCharm远程开发配置-Yinzm’s blog
+Python plotting on remote server using PyCharm -stackoverflow</p>
+  <footer class="post-footer">
+    <a class="read-more" href="https://page.shawnlu.ml/post/pycharm-matplotlib/">Read More →</a>
+  </footer>
+</article>
+
+      
+        <article class="post-entry">
+  <header class="post-header">
     <h3 class="post-title"><a href="https://page.shawnlu.ml/post/subspace-clustering/" class="post-link">Introduction to Subspace Clustering</a></h3>
     <p class="post-meta">@Shawn Lu · May 11, 2018 · 9 min read</p>
   </header>
