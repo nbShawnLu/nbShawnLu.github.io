@@ -11,13 +11,13 @@ weight: 40
 * Name: Xiao Lu (陆啸)  
 * Gender: Male  
 * Email: nbstephenlu@gmail.com  
-* Language: CET-6  
 
 ## Education  
 
 * MEng Computer Science and Technology  
 September 2017 - July 2020(Expected)  
 University of Electronic Science and Technology of China  
+Supervisor: [Zenglin Xu](http://smilelab.uestc.edu.cn/members/xuzenglin/)  
 Lab: [SMILE Lab](http://smilelab.uestc.edu.cn/)  
 Research Direction: Machine Learning, Deep Learning, Subspace Clustering  
 
@@ -27,18 +27,22 @@ Zhengzhou University
 
 ## Work Experience  
 
+* Research Intern of Machine Learning  
+June 2018 -  September 2018  
+[Tencent](https://www.tencent.com/en-us/index.html)  
+
 * Media Engine Develop  
 April 2016 - August 2016  
 [Juphoon Corporation](http://www.juphoon.com/en)  
 
 ## Publications  
 
-* Self-weighted Multiple Kernel Learning for Graph-based Clustering and Semi-supervised Classification, Zhao Kang, **Xiao Lu**, IJCAI 2018.  
+* Self-weighted Multiple Kernel Learning for Graph-based Clustering and Semi-supervised Classification; Zhao Kang, **Xiao Lu**, Jinfeng Yi, Zenglin Xu; IJCAI-18.  
 
 ## Awards  
 
+* 2018 Academic Scholarship for Postgraduate Students, First Prize, UESTC  
 * 2017 Academic Scholarship for Postgraduate Students, Second Prize, UESTC  
 * 2015 National Undergraduate Electronic Design Contest, First Prize, China  
 
 ## Projects  
-
